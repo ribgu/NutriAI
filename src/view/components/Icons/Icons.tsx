@@ -16,8 +16,8 @@ export const CloseIcon = () => (
     </svg>
 )
 
-export const ArrowRightIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+export const ArrowRightIcon = (props: { className: string }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={props.className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
     </svg>
 )
@@ -28,8 +28,8 @@ export const ChatIcon = () => (
     </svg>
 )
 
-export const StarIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
+export const StarIcon = (props: { className: string }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={props.className} fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
     </svg>
 )
@@ -54,8 +54,8 @@ export const LinkedinIcon = (props: { className: string }) => (
 
 export const MessageSquareIcon = (props: { className: string }) => (
     <svg className={props.className} fill="#000000" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+        <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+        <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round">
         </g>
         <g id="SVGRepo_iconCarrier">
             <g data-name="Layer 2">
@@ -74,5 +74,53 @@ export const SendIcon = (props: { className: string }) => (
     <svg className={props.className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 495.003 495.003">
         <path d="M164.711,456.687c0,2.966,1.647,5.686,4.266,7.072c2.617,1.385,5.799,1.207,8.245-0.468l55.09-37.616 l-67.6-32.22V456.687z" />
         <path d="M492.431,32.443c-1.513-1.395-3.466-2.125-5.44-2.125c-1.19,0-2.377,0.264-3.5,0.816L7.905,264.422 c-4.861,2.389-7.937,7.353-7.904,12.783c0.033,5.423,3.161,10.353,8.057,12.689l125.342,59.724l250.62-205.99L164.455,364.414 l156.145,74.4c1.918,0.919,4.012,1.376,6.084,1.376c1.768,0,3.519-0.322,5.186-0.977c3.637-1.438,6.527-4.318,7.97-7.956 L494.436,41.257C495.66,38.188,494.862,34.679,492.431,32.443z" />
+    </svg>
+)
+
+export const ArrowIcon = (props: { className: string }) => (
+    <svg className={props.className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+        <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z" />
+    </svg>
+)
+
+export const CameraIcon = (props: { className: string }) => (
+    <svg className={props.className} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path d="M12 10a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM4 6h4.4l1.72-2.3a1 1 0 0 1 .8-.4h5.16a1 1 0 0 1 .8.4L15.6 6H20a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z" />
+    </svg>
+)
+
+export const LineChartIcon = (props: { className: string }) => (
+    <svg className={props.className} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path d="M3 3v18h18M9 15l4-4 2.5 2.5L21 8" />
+    </svg>
+)
+
+export const UtensilsIcon = (props: { className: string }) => (
+    <svg className={props.className} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path d="M8 4a2 2 0 0 1 2 2v8m-4 0V6a2 2 0 1 1 4 0v8M14 8h4a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-4m0 0v4m0-4h4" />
+    </svg>
+)
+
+export const ClockIcon = (props: { className: string }) => (
+    <svg className={props.className} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path d="M12 6v6l4 2M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z" />
+    </svg>
+)
+
+export const HeartIcon = (props: { className: string }) => (
+    <svg className={props.className} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path d="M20.42 4.58a5.5 5.5 0 0 0-7.78 0L12 5.22l-.64-.64a5.5 5.5 0 0 0-7.78 7.78l8.42 8.42 8.42-8.42a5.5 5.5 0 0 0 0-7.78z" />
+    </svg>
+)
+
+export const UserPlusIcon = (props: { className: string }) => (
+    <svg className={props.className} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2m16-11h6m-3-3v6m-9-4a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" />
+    </svg>
+)
+
+export const SparklesIcon = (props: { className: string }) => (
+    <svg className={props.className} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path d="M9 12l-2 5-2-5 2-5 2 5zm13 0l-2 5-2-5 2-5 2 5zm-7 9l-2-5-5-2 5-2 2-5 2 5 5 2-5 2-2 5z" />
     </svg>
 )
