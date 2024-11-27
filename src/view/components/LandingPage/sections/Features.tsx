@@ -42,7 +42,7 @@ export default function Features() {
             Recursos Poderosos para Sua Jornada de Saúde
           </h2>
           <p className='text-lg text-gray-600 max-w-2xl mx-auto'>
-            Descubra como o NutritionAI combina tecnologia de ponta com orientação personalizada para ajudar você a alcançar seus objetivos de saúde.
+            Descubra como o NutriAI combina tecnologia de ponta com orientação personalizada para ajudar você a alcançar seus objetivos de saúde.
           </p>
         </div>
         

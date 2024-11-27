@@ -6,7 +6,7 @@ const testimonials = [
     name: 'Ana Silva',
     role: 'Entusiasta de Fitness',
     image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80',
-    content: 'O NutritionAI transformou completamente minha abordagem à alimentação saudável. As recomendações personalizadas são perfeitas!'
+    content: 'O NutriAI transformou completamente minha abordagem à alimentação saudável. As recomendações personalizadas são perfeitas!'
   },
   {
     name: 'Pedro Santos',
@@ -31,7 +31,7 @@ export default function Testimonials() {
             O que Nossos Usuários Dizem
           </h2>
           <p className='text-lg text-gray-600 max-w-2xl mx-auto'>
-            Junte-se a milhares de usuários satisfeitos que transformaram sua jornada de saúde com o NutritionAI.
+            Junte-se a milhares de usuários satisfeitos que transformaram sua jornada de saúde com o NutriAI.
           </p>
         </div>
 

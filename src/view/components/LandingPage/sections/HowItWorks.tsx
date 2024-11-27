@@ -29,10 +29,10 @@ export default function HowItWorks() {
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         <div className='text-center mb-16'>
           <h2 className='text-4xl font-bold text-neutral-dark mb-4'>
-            Como o NutritionAI Funciona
+            Como o NutriAI Funciona
           </h2>
           <p className='text-lg text-gray-600 max-w-2xl mx-auto'>
-            Começar com o NutritionAI é fácil. Siga estes passos simples para iniciar sua jornada de saúde personalizada.
+            Começar com o NutriAI é fácil. Siga estes passos simples para iniciar sua jornada de saúde personalizada.
           </p>
         </div>
 

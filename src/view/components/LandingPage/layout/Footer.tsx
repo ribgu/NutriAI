@@ -9,7 +9,7 @@ export default function Footer() {
           <div className='col-span-1 md:col-span-2'>
             <div className='flex items-center mb-4'>
               <BrainIcon className='h-8 w-8 text-primary' />
-              <span className='ml-2 text-xl font-bold'>NutritionAI</span>
+              <span className='ml-2 text-xl font-bold'>NutriAI</span>
             </div>
             <p className='text-gray-400 mb-4'>
               Transforme sua jornada de saúde com orientação nutricional alimentada por IA e recomendações personalizadas.
@@ -49,7 +49,7 @@ export default function Footer() {
         </div>
         
         <div className='border-t border-gray-800 mt-12 pt-8 text-center text-gray-400'>
-          <p>&copy; {new Date().getFullYear()} NutritionAI. Todos os direitos reservados.</p>
+          <p>&copy; {new Date().getFullYear()} NutriAI. Todos os direitos reservados.</p>
         </div>
       </div>
     </footer>
