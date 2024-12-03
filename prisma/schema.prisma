@@ -6,3 +6,52 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id       String           @id @default(cuid())
+  email    String           @unique
+  password String
+  name     String
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+  history  ProfileHistory[]
+
+  Record Record[]
+
+  Chat Chat[]
+}
+
+model ProfileHistory {
+  id               String   @id @default(cuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id])
+  recordedAt       DateTime @default(now())
+  height           Float
+  weight           Float
+  healthInfo       Json // Se tem diabetes, hipertensão, se é vegano, vegetariano, intolerante a lactose, se é fumante, se bebe, se pratica atividade física
+}
+
+model Record {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  type        RecordType
+  RecordInfo  Json // Quantidade de água, refeição e suas calorias e ingredientes, exercício e suas calorias e duração, sono e suas horas
+  createdAt   DateTime @default(now())
+}
+
+model Chat {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  model     String   // Modelo de IA usado no chat
+  messages  Json     // Array de mensagens do chat
+}
+
+enum RecordType {
+  WATER
+  MEAL
+  EXERCISE
+  SLEEP
+}
