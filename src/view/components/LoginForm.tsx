@@ -18,10 +18,9 @@ export function LoginForm() {
   }
 
   return (
-    <div className="card w-full max-w-sm bg-base-100 shadow-xl">
+    <div className="card w-full max-w-sm bg-base-100 shadow-xl border text-black">
       <div className="card-body">
         <h2 className="card-title text-3xl font-bold text-center mb-2">NutriAI</h2>
-        <p className="text-center text-sm mb-6">Seu assistente pessoal de nutrição</p>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="form-control">
             <label className="label" htmlFor="email-address">
@@ -33,7 +32,6 @@ export function LoginForm() {
               type="email"
               autoComplete="email"
               required
-              placeholder="seu@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="input input-bordered w-full"
@@ -49,7 +47,6 @@ export function LoginForm() {
               type="password"
               autoComplete="current-password"
               required
-              placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="input input-bordered w-full"
@@ -75,9 +72,9 @@ export function LoginForm() {
           </div>
         )}
         <div className="text-center mt-4">
-          <p className="text-sm">
+          <p className="text-sm text-black">
             Não tem uma conta?{' '}
-            <Link href="/signup" className="link link-primary">
+            <Link href="/cadastre-se" className="link link-primary">
               Cadastre-se
             </Link>
           </p>
