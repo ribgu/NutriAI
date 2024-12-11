@@ -1,3 +1,5 @@
+'use server'
+
 import Footer from '@/view/components/LandingPage/layout/Footer'
 import Navbar from '@/view/components/LandingPage/layout/NavBar'
 import AIChat from '@/view/components/LandingPage/sections/AIChat'
@@ -7,7 +9,7 @@ import Hero from '@/view/components/LandingPage/sections/Hero'
 import HowItWorks from '@/view/components/LandingPage/sections/HowItWorks'
 import Testimonials from '@/view/components/LandingPage/sections/Testimonials'
 
-export default function Home() {
+export default async function Home() {
   return (
     <main className='min-h-screen bg-background'>
       <Navbar />

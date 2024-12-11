@@ -3,10 +3,12 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import PrimaryButton from '@/view/components/Buttons/PrimaryButton'
+import { useRouter } from 'next/navigation'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const router = useRouter()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,6 +17,10 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  const handleLogin = () => {
+    router.push('/login')
+  }
 
   return (
     <nav className={`fixed w-full z-50 transition-all duration-300 ${
@@ -45,7 +51,7 @@ export default function Navbar() {
 
           {/* CTA Button */}
           <div className='hidden lg:flex'>
-            <PrimaryButton className='hover:scale-105 transition-transform duration-200'>
+            <PrimaryButton className='hover:scale-105 transition-transform duration-200' onClick={handleLogin}>
               Começar Agora
             </PrimaryButton>
           </div>

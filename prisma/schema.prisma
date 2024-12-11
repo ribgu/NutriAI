@@ -28,7 +28,7 @@ model ProfileHistory {
   recordedAt       DateTime @default(now())
   height           Float
   weight           Float
-  healthInfo       Json // Se tem diabetes, hipertensão, se é vegano, vegetariano, intolerante a lactose, se é fumante, se bebe, se pratica atividade física
+  healthInfo       Json? // Se tem diabetes, hipertensão, se é vegano, vegetariano, intolerante a lactose, se é fumante, se bebe, se pratica atividade física
 }
 
 model Record {
