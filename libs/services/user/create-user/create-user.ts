@@ -1,6 +1,6 @@
 import { User } from '@prisma/client'
 import { hash } from 'bcryptjs'
-import { prisma } from '@/app/clients/prisma-client'
+import { prisma } from '../../../../../libs/clients/prisma-client'
 
 export async function createUser(user: User) {
   const { email, password, name } = user
