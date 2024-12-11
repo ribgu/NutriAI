@@ -11,6 +11,13 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    user: "postgres"
+    command: >
+      sh -c "
+        echo \"listen_addresses = '*'\" >> /var/lib/postgresql/data/postgresql.conf &&
+        echo \"host all all 0.0.0.0/0 md5\" >> /var/lib/postgresql/data/pg_hba.conf &&
+        postgres
+      "
 
 volumes:
   postgres_data:
