@@ -10,7 +10,6 @@ export function verifyToken(token: string) {
   }
 }
 
-// Middleware para autenticação (caso use Express)
 export function authenticate(token: string) {
   const decoded = verifyToken(token)
   return decoded.userId
