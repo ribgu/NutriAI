@@ -1,6 +1,6 @@
 import { compare } from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import { prisma } from '../../../../../libs/clients/prisma-client'
+import { prisma } from '../../../clients/prisma-client'
 
 export async function login(email: string, password: string) {
   const user = await prisma.user.findUnique({ where: { email } })
