@@ -1,17 +1,39 @@
-import { User } from '@prisma/client'
 import { hash } from 'bcryptjs'
-import { prisma } from '../../../../../libs/clients/prisma-client'
+import { prisma } from '../../../clients/prisma-client'
+import { Prisma } from '@prisma/client'
 
-export async function createUser(user: User) {
-  const { email, password, name } = user
+type CreateUser = {
+  email: string
+  password: string
+  name: string
+  weight: number
+  height: number
+  additionalInfo?: Prisma.JsonValue
+}
+
+export async function createUser(user: CreateUser) {
+  const { email, password, name, weight, height, additionalInfo } = user
 
   const hashedPassword = await hash(password, 10)
 
-  return await prisma.user.create({
+  if (await prisma.user.findUnique({ where: { email } })) {
+    throw new Error('Usuário já cadastrado')
+  }
+
+  const newUser = await prisma.user.create({
     data: {
       email,
       password: hashedPassword,
       name
+    }
+  })
+
+  await prisma.profileHistory.create({
+    data: {
+      userId: newUser.id,
+      weight,
+      height,
+      healthInfo: additionalInfo || Prisma.JsonNull
     }
   })
 }
