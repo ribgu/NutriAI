@@ -19,8 +19,8 @@ export function LoginForm() {
 
     try {
       const response = await client.signIn({ email, password })
-      console.log('Login successful:', response.message)
-      // Redirecione para a página principal ou salve o token no estado/localStorage
+      sessionStorage.setItem('user', JSON.stringify(response.user))
+      sessionStorage.setItem('token', response.token)
     } catch (err) {
       console.error('Login error:', err)
       setError('Erro desconhecido. Tente novamente mais tarde.')

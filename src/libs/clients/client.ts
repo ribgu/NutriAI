@@ -1,9 +1,16 @@
 import axios, { AxiosInstance } from 'axios'
 import { CreateUserCommand } from '../services/user/create-user/create-user'
 import { LoginCommand } from '../services/user/create-user/login'
+import { User } from '@prisma/client'
 
 type DefaultResponse = {
   message: string
+}
+
+type SignInResponse = {
+  message: string
+  token: string
+  user: User
 }
 
 export default class Client {
@@ -33,9 +40,9 @@ export default class Client {
     }
   }
 
-  async signIn(loginData: LoginCommand): Promise<DefaultResponse> {
+  async signIn(loginData: LoginCommand): Promise<SignInResponse> {
     try {
-      const response = await this.axios.post<DefaultResponse>('/user/signin', loginData, {
+      const response = await this.axios.post<SignInResponse>('/user/signin', loginData, {
         headers: {
           'Content-Type': 'application/json'
         }
