@@ -10,13 +10,13 @@ export default class Client {
 
   constructor() {
     this.axios = axios.create({
-      baseURL: process.env.BASE_API_URL
+      baseURL: '/api'
     })
   }
 
   async signUp(userData: CreateUserCommand): Promise<DefaultResponse> {
     try {
-      const response = await this.axios.post<DefaultResponse>('/api/signup', userData, {
+      const response = await this.axios.post<DefaultResponse>('/user/signup', userData, {
         headers: {
           'Content-Type': 'application/json'
         }

@@ -2,8 +2,10 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import Client from '@/libs/clients/client'
 
 export function SignupForm() {
+    const client = new Client()
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -25,27 +27,27 @@ export function SignupForm() {
         setError('')
 
         try {
+            const additionalInfo = {
+                physicalActivity,
+                smoking,
+                alcohol,
+                dietaryPreferences,
+                averageSleepHours,
+                dailyWaterIntake,
+                healthGoals,
+                medicationAllergies
+            }
+
             const data = {
                 name,
                 email,
                 password,
                 height: parseFloat(height),
                 weight: parseFloat(weight),
-                additionalInfo: provideAdditionalInfo
-                    ? {
-                        physicalActivity,
-                        smoking,
-                        alcohol,
-                        dietaryPreferences,
-                        averageSleepHours: averageSleepHours ? parseFloat(averageSleepHours) : null,
-                        dailyWaterIntake: dailyWaterIntake ? parseFloat(dailyWaterIntake) : null,
-                        healthGoals,
-                        medicationAllergies
-                    }
-                    : null
+                additionalInfo: provideAdditionalInfo ? additionalInfo : null
             }
 
-            console.log('Signup attempt', data)
+            await client.signUp(data)
             alert('Cadastro realizado com sucesso!')
         } catch (err) {
             console.error(err)
