@@ -1,6 +1,6 @@
-import { hash } from 'bcryptjs'
 import { prisma } from '../../../clients/prisma-client'
 import { Prisma } from '@prisma/client'
+import { hash } from 'bcryptjs'
 
 export type CreateUserCommand = {
   email: string
@@ -11,12 +11,18 @@ export type CreateUserCommand = {
   additionalInfo?: Prisma.JsonValue
 }
 
+const JWT_SECRET = process.env.JWT_SECRET!
+
 export async function createUser(user: CreateUserCommand) {
   const { email, password, name, weight, height, additionalInfo } = user
 
   const hashedPassword = await hash(password, 10)
+  console.log('password:', password)
+  console.log('Hashed password:', hashedPassword)
+  console.log('secret:', JWT_SECRET)
 
-  if (await prisma.user.findUnique({ where: { email } })) {
+  const existingUser = await prisma.user.findUnique({ where: { email } })
+  if (existingUser) {
     throw new Error('Usuário já cadastrado')
   }
 

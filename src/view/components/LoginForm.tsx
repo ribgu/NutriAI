@@ -2,19 +2,31 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import Client from '@/libs/clients/client'
 
 export function LoginForm() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
-    // Aqui você implementaria a lógica de autenticação
-    console.log('Login attempt', { email, password })
-    // Simulating an error for demonstration
-    setError('Credenciais inválidas. Por favor, tente novamente.')
+    setIsLoading(true)
+
+    const client = new Client()
+
+    try {
+      const response = await client.signIn({ email, password })
+      console.log('Login successful:', response.message)
+      // Redirecione para a página principal ou salve o token no estado/localStorage
+    } catch (err) {
+      console.error('Login error:', err)
+      setError('Erro desconhecido. Tente novamente mais tarde.')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -60,14 +72,16 @@ export function LoginForm() {
             </div>
           </div>
           <div className="form-control mt-6">
-            <button type="submit" className="btn btn-primary w-full">
-              Entrar
+            <button type="submit" className="btn btn-primary w-full" disabled={isLoading}>
+              {isLoading ? 'Entrando...' : 'Entrar'}
             </button>
           </div>
         </form>
         {error && (
           <div className="alert alert-error mt-4">
-            <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
             <span>{error}</span>
           </div>
         )}
@@ -83,4 +97,3 @@ export function LoginForm() {
     </div>
   )
 }
-

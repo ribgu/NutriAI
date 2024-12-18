@@ -2,23 +2,30 @@ import { compare } from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { prisma } from '../../../clients/prisma-client'
 
-export async function login(email: string, password: string) {
-  const user = await prisma.user.findUnique({ where: { email } })
+export type LoginCommand = {
+  email: string
+  password: string
+}
+
+export async function login(loginData: LoginCommand) {
+  const user = await prisma.user.findUnique({ where: { email: loginData.email } })
   const JWT_SECRET = process.env.JWT_SECRET!
-  const JWT_EXPIRATION = process.env.JWT_EXPIRATION!
+
+  console.log('password:', loginData.password)
 
   if (!user) {
-    throw new Error('Credenciais inválidas')
+    throw new Error('Credenciais inválidas, o usuário não existe')
   }
 
-  const isPasswordValid = await compare(password, user.password)
+  const isPasswordValid = await compare(loginData.password, user.password)
+  console.log('isPasswordValid', isPasswordValid)
+  console.log('user.password', user.password)
 
   if (!isPasswordValid) {
-    throw new Error('Credenciais inválidas')
+    throw new Error('Credenciais inválidas, a senha está incorreta')
   }
 
-  // Gerar token JWT
-  const token = jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: JWT_EXPIRATION })
+  const token = jwt.sign({ userId: user.id }, JWT_SECRET)
 
   return { token, user }
 }
