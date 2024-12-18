@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { createUser } from '../../../../libs/services/user/create-user/create-user'
+import { createUser, CreateUserCommand } from '@/libs/services/user/create-user/create-user'
 import { z } from 'zod'
 
 const signUpSchema = z.object({
@@ -14,7 +14,7 @@ const signUpSchema = z.object({
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const validatedData = signUpSchema.parse(body)
+    const validatedData: CreateUserCommand = signUpSchema.parse(body)
 
     await createUser(validatedData)
 

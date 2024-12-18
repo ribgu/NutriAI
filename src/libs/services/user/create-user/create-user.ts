@@ -2,7 +2,7 @@ import { hash } from 'bcryptjs'
 import { prisma } from '../../../clients/prisma-client'
 import { Prisma } from '@prisma/client'
 
-type CreateUser = {
+export type CreateUserCommand = {
   email: string
   password: string
   name: string
@@ -11,7 +11,7 @@ type CreateUser = {
   additionalInfo?: Prisma.JsonValue
 }
 
-export async function createUser(user: CreateUser) {
+export async function createUser(user: CreateUserCommand) {
   const { email, password, name, weight, height, additionalInfo } = user
 
   const hashedPassword = await hash(password, 10)
