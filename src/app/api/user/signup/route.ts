@@ -8,7 +8,7 @@ const signUpSchema = z.object({
   name: z.string().min(2),
   weight: z.number().positive(),
   height: z.number().positive(),
-  additionalInfo: z.record(z.any()).optional()
+  additionalInfo: z.record(z.any()).nullable().optional()
 })
 
 export async function POST(request: Request) {
