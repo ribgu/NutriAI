@@ -89,13 +89,13 @@ export const AppLayout = ({ children }: AppLayoutProps) => {
 const Logo = () => (
   <Link
     href="#"
-    className="font-normal flex space-x-2 items-center text-end text-sm text-black py-1 relative z-20"
+    className="font-normal h-16 flex space-x-2 items-center text-end text-sm text-black py-1 relative z-20"
   >
     <LogoIcon />
     <motion.span
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="font-medium text-base text-black text-end dark:text-white whitespace-pre"
+      className="font-medium text-base text-black text-end dark:text-white whitespace-pre mt-2"
     >
       NutriAI
     </motion.span>
@@ -103,7 +103,7 @@ const Logo = () => (
 )
 
 const LogoIcon = () => (
-    <Image src="nutriai.svg" alt="Logo" width={28} height={28} />
+    <Image src="nutriai.svg" alt="Logo" width={28} height={28} className="py-4" />
 )
 
 export default AppLayout
