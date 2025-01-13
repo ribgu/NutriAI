@@ -103,7 +103,7 @@ const Logo = () => (
 )
 
 const LogoIcon = () => (
-    <Image src="nutriai.svg" alt="Logo" width={20} height={20} />
+    <Image src="nutriai.svg" alt="Logo" width={28} height={28} />
 )
 
 export default AppLayout
