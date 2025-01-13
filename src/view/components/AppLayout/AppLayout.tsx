@@ -16,28 +16,28 @@ const links = [
     label: 'Dashboard',
     href: '#',
     icon: (
-      <LayoutDashboard className="text-neutral-700 dark:text-neutral-200 h-8 w-8 flex-shrink-0" />
+      <LayoutDashboard className="text-neutral-700 dark:text-neutral-200 h-7 w-7 flex-shrink-0" />
     ),
   },
   {
     label: 'Profile',
     href: '#',
     icon: (
-      <UserCog className="text-neutral-700 dark:text-neutral-200 h-8 w-8 flex-shrink-0" />
+      <UserCog className="text-neutral-700 dark:text-neutral-200 h-7 w-7 flex-shrink-0" />
     ),
   },
   {
     label: 'Settings',
     href: '#',
     icon: (
-      <Settings className="text-neutral-700 dark:text-neutral-200 h-8 w-8 flex-shrink-0" />
+      <Settings className="text-neutral-700 dark:text-neutral-200 h-7 w-7 flex-shrink-0" />
     ),
   },
   {
     label: 'Logout',
     href: '#',
     icon: (
-      <LogOut className="text-neutral-700 dark:text-neutral-200 h-8 w-8 flex-shrink-0" />
+      <LogOut className="text-neutral-700 dark:text-neutral-200 h-7 w-7 flex-shrink-0" />
     ),
   },
 ]
@@ -66,7 +66,7 @@ export const AppLayout = ({ children }: AppLayoutProps) => {
                 icon: (
                   <Image
                     src="https://64.media.tumblr.com/01b9b5b72a804dcb44c31bf8938fca68/c81805076c43c391-78/s1280x1920/6f546795bac3d1020e546cca1d942c807d6e28d5.jpg"
-                    className="h-8 w-8 flex-shrink-0 rounded-full"
+                    className="h-5 w-5 flex-shrink-0 rounded-full"
                     width={50}
                     height={50}
                     alt="Avatar"
@@ -103,7 +103,7 @@ const Logo = () => (
 )
 
 const LogoIcon = () => (
-    <Image src="nutriai.svg" alt="Logo" width={32} height={32} />
+    <Image src="nutriai.svg" alt="Logo" width={20} height={20} />
 )
 
 export default AppLayout
