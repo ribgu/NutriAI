@@ -79,7 +79,7 @@ export const AppLayout = ({ children }: AppLayoutProps) => {
       </Sidebar>
 
       {/* Main Content */}
-      <main className="flex-grow bg-white dark:bg-neutral-800 p-4">
+      <main className="flex-grow bg-white dark:bg-neutral-800 p-4 rounded-tl-2xl">
         {children}
       </main>
     </div>
