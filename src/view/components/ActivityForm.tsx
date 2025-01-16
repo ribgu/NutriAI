@@ -64,19 +64,52 @@ const ActivityForm = () => {
           <option value="SLEEP">Sono</option>
         </select>
       </div>
-      <div className="form-control">
-        <label className="label" htmlFor="recordInfo">
-          <span className="label-text">Informações do Registro</span>
-        </label>
-        <textarea
-          id="recordInfo"
-          name="recordInfo"
-          required
-          value={JSON.stringify(recordInfo)}
-          onChange={(e) => setRecordInfo(JSON.parse(e.target.value))}
-          className="textarea textarea-bordered w-full"
-        />
-      </div>
+      {type === "WATER" && (
+        <div className="form-control">
+          <label className="label" htmlFor="waterAmount">
+            <span className="label-text">Quantidade de Água (ml)</span>
+          </label>
+          <input
+            id="waterAmount"
+            name="waterAmount"
+            type="number"
+            required
+            value={recordInfo.amount || ""}
+            onChange={(e) => setRecordInfo({ ...recordInfo, amount: e.target.value })}
+            className="input input-bordered w-full"
+          />
+        </div>
+      )}
+      {type === "MEAL" && (
+        <div className="form-control">
+          <label className="label" htmlFor="mealDescription">
+            <span className="label-text">Descrição da Refeição</span>
+          </label>
+          <textarea
+            id="mealDescription"
+            name="mealDescription"
+            required
+            value={recordInfo.description || ""}
+            onChange={(e) => setRecordInfo({ ...recordInfo, description: e.target.value })}
+            className="textarea textarea-bordered w-full"
+          />
+        </div>
+      )}
+      {type === "EXERCISE" && (
+        <div className="form-control">
+          <label className="label" htmlFor="exerciseDescription">
+            <span className="label-text">Descrição do Exercício</span>
+          </label>
+          <textarea
+            id="exerciseDescription"
+            name="exerciseDescription"
+            required
+            value={recordInfo.description || ""}
+            onChange={(e) => setRecordInfo({ ...recordInfo, description: e.target.value })}
+            className="textarea textarea-bordered w-full"
+          />
+        </div>
+      )}
       <div className="form-control mt-6">
         <button type="submit" className="btn btn-primary w-full" disabled={isLoading}>
           {isLoading ? "Adicionando..." : "Adicionar Registro"}
