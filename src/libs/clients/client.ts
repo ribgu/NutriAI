@@ -13,6 +13,21 @@ type SignInResponse = {
   user: User
 }
 
+type CreateActivityRecordCommand = {
+  userId: string
+  type: 'WATER' | 'MEAL' | 'EXERCISE' | 'SLEEP'
+  recordInfo: Record<string, any>
+}
+
+type CreateActivityRecordResponse = {
+  message: string
+  record: any
+}
+
+type GetActivityRecordsResponse = {
+  records: any[]
+}
+
 export default class Client {
   private axios: AxiosInstance
 
@@ -54,6 +69,42 @@ export default class Client {
       if (axios.isAxiosError(error)) {
         console.error('Sign in failed:', error.response?.data)
         throw new Error(error.response?.data?.message || 'Sign in failed')
+      }
+      throw error
+    }
+  }
+
+  async createActivityRecord(data: CreateActivityRecordCommand): Promise<CreateActivityRecordResponse> {
+    try {
+      const response = await this.axios.post<CreateActivityRecordResponse>('/activity', data, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+
+      return response.data
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error('Create activity record failed:', error.response?.data)
+        throw new Error(error.response?.data?.message || 'Create activity record failed')
+      }
+      throw error
+    }
+  }
+
+  async getActivityRecords(): Promise<GetActivityRecordsResponse> {
+    try {
+      const response = await this.axios.get<GetActivityRecordsResponse>('/activity', {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+
+      return response.data
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error('Get activity records failed:', error.response?.data)
+        throw new Error(error.response?.data?.message || 'Get activity records failed')
       }
       throw error
     }
