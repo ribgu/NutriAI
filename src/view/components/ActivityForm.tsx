@@ -1,32 +1,34 @@
-import React, { useState } from 'react'
-import { useRouter } from 'next/router'
-import Client from '@/libs/clients/client'
+"use client";
+
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import Client from "@/libs/clients/client";
 
 const ActivityForm = () => {
-  const [userId, setUserId] = useState('')
-  const [type, setType] = useState('WATER')
-  const [recordInfo, setRecordInfo] = useState({})
-  const [error, setError] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
-  const router = useRouter()
+  const [userId, setUserId] = useState("");
+  const [type, setType] = useState("WATER");
+  const [recordInfo, setRecordInfo] = useState({});
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError('')
-    setIsLoading(true)
+    e.preventDefault();
+    setError("");
+    setIsLoading(true);
 
-    const client = new Client()
+    const client = new Client();
 
     try {
-      await client.createActivityRecord({ userId, type, recordInfo })
-      router.push('/dashboard')
+      await client.createActivityRecord({ userId, type, recordInfo });
+      router.push("/dashboard");
     } catch (err) {
-      console.error('Error creating activity record:', err)
-      setError('Erro ao criar registro de atividade. Tente novamente mais tarde.')
+      console.error("Error creating activity record:", err);
+      setError("Erro ao criar registro de atividade. Tente novamente mais tarde.");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -77,7 +79,7 @@ const ActivityForm = () => {
       </div>
       <div className="form-control mt-6">
         <button type="submit" className="btn btn-primary w-full" disabled={isLoading}>
-          {isLoading ? 'Adicionando...' : 'Adicionar Registro'}
+          {isLoading ? "Adicionando..." : "Adicionar Registro"}
         </button>
       </div>
       {error && (
@@ -89,7 +91,7 @@ const ActivityForm = () => {
         </div>
       )}
     </form>
-  )
-}
+  );
+};
 
-export default ActivityForm
+export default ActivityForm;
