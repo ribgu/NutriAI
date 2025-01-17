@@ -26,6 +26,7 @@ export const useSidebar = () => {
   if (!context) {
     throw new Error("useSidebar must be used within a SidebarProvider")
   }
+
   return context
 }
 
@@ -85,6 +86,7 @@ export const DesktopSidebar = ({
   ...props
 }: React.ComponentProps<typeof motion.div>) => {
   const { open, setOpen, animate } = useSidebar()
+
   return (
     <motion.div
       className={cn(
@@ -109,6 +111,7 @@ export const MobileSidebar = ({
   ...props
 }: React.ComponentProps<"div">) => {
   const { open, setOpen } = useSidebar()
+
   return (
     <>
       <div
@@ -118,7 +121,7 @@ export const MobileSidebar = ({
         {...props}
       >
         <div className="flex justify-end z-20 w-full">
-            XX
+          XX
         </div>
         <AnimatePresence>
           {open && (
@@ -160,6 +163,7 @@ export const SidebarLink = ({
   props?: LinkProps
 }) => {
   const { open, animate } = useSidebar()
+
   return (
     <Link
       href={link.href}

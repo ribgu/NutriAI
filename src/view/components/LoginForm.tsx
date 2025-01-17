@@ -26,8 +26,7 @@ export function LoginForm() {
         sessionStorage.setItem('token', response.token)
       }
     } catch (err) {
-      console.error('Login error:', err)
-      setError('Erro desconhecido. Tente novamente mais tarde.')
+      setError(`Erro desconhecido. Tente novamente mais tarde. ${err}`)
     } finally {
       setIsLoading(false)
     }

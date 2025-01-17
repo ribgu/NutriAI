@@ -15,6 +15,7 @@ export default function Navbar() {
       setScrolled(window.scrollY > 20)
     }
     window.addEventListener('scroll', handleScroll)
+
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
@@ -25,7 +26,8 @@ export default function Navbar() {
   return (
     <nav className={`fixed w-full z-50 transition-all duration-300 ${
       scrolled ? 'bg-white/80 backdrop-blur-md shadow-lg' : 'bg-transparent'
-    }`}>
+    }`}
+    >
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         <div className='flex justify-between h-16 items-center'>
           {/* Logo */}
@@ -65,13 +67,16 @@ export default function Navbar() {
               <div className='w-6 h-5 flex flex-col justify-between'>
                 <span className={`w-full h-0.5 bg-gray-600 transition-all duration-300 ${
                   isOpen ? 'rotate-45 translate-y-2' : ''
-                }`} />
+                }`}
+                />
                 <span className={`w-full h-0.5 bg-gray-600 transition-opacity duration-300 ${
                   isOpen ? 'opacity-0' : ''
-                }`} />
+                }`}
+                />
                 <span className={`w-full h-0.5 bg-gray-600 transition-all duration-300 ${
                   isOpen ? '-rotate-45 -translate-y-2' : ''
-                }`} />
+                }`}
+                />
               </div>
             </button>
           </div>
@@ -81,7 +86,8 @@ export default function Navbar() {
       {/* Mobile Menu */}
       <div className={`lg:hidden transition-all duration-300 ease-in-out ${
         isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-      } overflow-hidden bg-white/90 backdrop-blur-md`}>
+      } overflow-hidden bg-white/90 backdrop-blur-md`}
+      >
         <div className='px-4 pt-2 pb-4 space-y-3'>
           {['Recursos', 'Como Funciona', 'Chat IA', 'Depoimentos'].map((item, index) => (
             <Link

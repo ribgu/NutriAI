@@ -43,7 +43,6 @@ export default class Client {
       return response.data
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.error('Sign up failed:', error.response?.data)
         throw new Error(error.response?.data?.message || 'Sign up failed')
       }
       throw error
@@ -62,7 +61,6 @@ export default class Client {
     }
     catch (error) {
       if (axios.isAxiosError(error)) {
-        console.error('Sign in failed:', error.response?.data)
         throw new Error(error.response?.data?.message || 'Sign in failed')
       }
       throw error
@@ -80,7 +78,6 @@ export default class Client {
       return response.data
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.error('Create activity record failed:', error.response?.data)
         throw new Error(error.response?.data?.message || 'Create activity record failed')
       }
       throw error
@@ -98,7 +95,6 @@ export default class Client {
       return response.data
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.error('Get activity records failed:', error.response?.data)
         throw new Error(error.response?.data?.message || 'Get activity records failed')
       }
       throw error
