@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useAuth } from '@/contexts/AuthContext'
 
-export function LoginForm() {
+export function Login() {
   const { signIn } = useAuth()
   const router = useRouter()
   const [email, setEmail] = useState('')
