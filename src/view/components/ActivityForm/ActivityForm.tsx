@@ -17,6 +17,7 @@ function ActivityForm() {
   const [trainingDescription, setTrainingDescription] = useState('')
   const [sleepHour, setSleepHour] = useState('')
   const [wakeUpHour, setWakeUpHour] = useState('')
+  const [sleepDuration, setSleepDuration] = useState(0)
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
@@ -38,7 +39,7 @@ function ActivityForm() {
     } else if (type === 'EXERCISE') {
       recordInfo = { trainingDescription }
     } else if (type === 'SLEEP') {
-      recordInfo = { sleepHour, wakeUpHour }
+      recordInfo = { sleepHour, wakeUpHour, sleepDuration }
     }
 
     try {
@@ -95,6 +96,8 @@ function ActivityForm() {
           setSleepHour={setSleepHour}
           wakeUpHour={wakeUpHour}
           setWakeUpHour={setWakeUpHour}
+          sleepDuration={sleepDuration}
+          setSleepDuration={setSleepDuration}
         />
       )}
       <div className="form-control mt-6">
