@@ -7,6 +7,9 @@ import { RecordType } from '@/types/RecordType'
 
 const ActivityForm = () => {
   const [type, setType] = useState<RecordType>('WATER')
+  const [waterAmount, setWaterAmount] = useState('')
+  const [foodDescription, setFoodDescription] = useState('')
+  const [trainingDescription, setTrainingDescription] = useState('')
   const [recordInfo, setRecordInfo] = useState({})
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -20,6 +23,15 @@ const ActivityForm = () => {
     const client = new Client()
     const user = sessionStorage.getItem('user')
     const userId = user ? JSON.parse(user).id : ''
+
+    let recordInfo = {}
+    if (type === 'WATER') {
+      recordInfo = { waterAmount }
+    } else if (type === 'MEAL') {
+      recordInfo = { foodDescription }
+    } else if (type === 'EXERCISE') {
+      recordInfo = { trainingDescription }
+    }
 
     try {
       await client.createActivityRecord({ userId, type, RecordInfo: recordInfo })
@@ -52,19 +64,52 @@ const ActivityForm = () => {
           <option value="SLEEP">Sono</option>
         </select>
       </div>
-      <div className="form-control">
-        <label className="label" htmlFor="recordInfo">
-          <span className="label-text">Informações do Registro</span>
-        </label>
-        <textarea
-          id="recordInfo"
-          name="recordInfo"
-          required
-          value={JSON.stringify(recordInfo)}
-          onChange={(e) => setRecordInfo(JSON.parse(e.target.value))}
-          className="textarea textarea-bordered w-full"
-        />
-      </div>
+      {type === 'WATER' && (
+        <div className="form-control">
+          <label className="label" htmlFor="waterAmount">
+            <span className="label-text">Quantidade de Água (ml)</span>
+          </label>
+          <input
+            id="waterAmount"
+            name="waterAmount"
+            type="number"
+            required
+            value={waterAmount}
+            onChange={(e) => setWaterAmount(e.target.value)}
+            className="input input-bordered w-full"
+          />
+        </div>
+      )}
+      {type === 'MEAL' && (
+        <div className="form-control">
+          <label className="label" htmlFor="foodDescription">
+            <span className="label-text">Descrição da Refeição</span>
+          </label>
+          <textarea
+            id="foodDescription"
+            name="foodDescription"
+            required
+            value={foodDescription}
+            onChange={(e) => setFoodDescription(e.target.value)}
+            className="textarea textarea-bordered w-full"
+          />
+        </div>
+      )}
+      {type === 'EXERCISE' && (
+        <div className="form-control">
+          <label className="label" htmlFor="trainingDescription">
+            <span className="label-text">Descrição do Exercício</span>
+          </label>
+          <textarea
+            id="trainingDescription"
+            name="trainingDescription"
+            required
+            value={trainingDescription}
+            onChange={(e) => setTrainingDescription(e.target.value)}
+            className="textarea textarea-bordered w-full"
+          />
+        </div>
+      )}
       <div className="form-control mt-6">
         <button type="submit" className="btn btn-primary w-full" disabled={isLoading}>
           {isLoading ? 'Adicionando...' : 'Adicionar Registro'}
