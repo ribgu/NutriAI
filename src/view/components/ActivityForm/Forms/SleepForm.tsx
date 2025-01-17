@@ -14,8 +14,8 @@ export function SleepForm(props: SleepFormProps) {
 
   useEffect(() => {
     if (sleepHour && wakeUpHour) {
-      const sleepTime = new Date(`1970-01-01T${sleepHour}:00`)
-      const wakeTime = new Date(`1970-01-01T${wakeUpHour}:00`)
+      const sleepTime = new Date(sleepHour)
+      const wakeTime = new Date(wakeUpHour)
       let duration = (wakeTime.getTime() - sleepTime.getTime()) / (1000 * 60 * 60)
       if (duration < 0) {
         duration += 24
@@ -32,7 +32,7 @@ export function SleepForm(props: SleepFormProps) {
       <input
         id="sleepHour"
         name="sleepHour"
-        type="time"
+        type="datetime-local"
         required
         value={sleepHour}
         onChange={(e) => setSleepHour(e.target.value)}
@@ -44,7 +44,7 @@ export function SleepForm(props: SleepFormProps) {
       <input
         id="wakeUpHour"
         name="wakeUpHour"
-        type="time"
+        type="datetime-local"
         required
         value={wakeUpHour}
         onChange={(e) => setWakeUpHour(e.target.value)}
