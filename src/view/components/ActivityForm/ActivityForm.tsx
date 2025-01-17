@@ -8,12 +8,15 @@ import { useAuth } from '@/contexts/AuthContext'
 import { WaterForm } from './Forms/WaterForm'
 import { MealForm } from './Forms/MealForm'
 import { ExerciseForm } from './Forms/ExerciseForm'
+import { SleepForm } from './Forms/SleepForm'
 
 function ActivityForm() {
   const [type, setType] = useState<RecordType>('WATER')
   const [waterAmount, setWaterAmount] = useState('')
   const [foodDescription, setFoodDescription] = useState('')
   const [trainingDescription, setTrainingDescription] = useState('')
+  const [sleepHour, setSleepHour] = useState('')
+  const [wakeUpHour, setWakeUpHour] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
@@ -34,6 +37,8 @@ function ActivityForm() {
       recordInfo = { foodDescription }
     } else if (type === 'EXERCISE') {
       recordInfo = { trainingDescription }
+    } else if (type === 'SLEEP') {
+      recordInfo = { sleepHour, wakeUpHour }
     }
 
     try {
@@ -82,6 +87,14 @@ function ActivityForm() {
         <ExerciseForm
           setTrainingDescription={setTrainingDescription}
           trainingDescription={trainingDescription}
+        />
+      )}
+      {type === 'SLEEP' && (
+        <SleepForm
+          sleepHour={sleepHour}
+          setSleepHour={setSleepHour}
+          wakeUpHour={wakeUpHour}
+          setWakeUpHour={setWakeUpHour}
         />
       )}
       <div className="form-control mt-6">
