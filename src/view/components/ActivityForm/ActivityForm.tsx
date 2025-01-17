@@ -67,10 +67,16 @@ function ActivityForm() {
         </select>
       </div>
       {type === 'WATER' && (
-        <WaterForm />
+        <WaterForm
+          waterAmount={waterAmount}
+          setWaterAmount={setWaterAmount}
+        />
       )}
       {type === 'MEAL' && (
-        <MealForm />
+        <MealForm
+          foodDescription={foodDescription}
+          setFoodDescription={setFoodDescription}
+        />
       )}
       {type === 'EXERCISE' && (
         <ExerciseForm
