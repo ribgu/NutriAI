@@ -2,9 +2,12 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import Client from '@/libs/clients/client'
+import { useRouter } from 'next/router'
+import { useAuth } from '@/contexts/AuthContext'
 
 export function LoginForm() {
+  const { signIn } = useAuth()
+  const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -15,18 +18,11 @@ export function LoginForm() {
     setError('')
     setIsLoading(true)
 
-    const client = new Client()
-
     try {
-      const response = await client.signIn({ email, password })
-      if (response.user) {
-        sessionStorage.setItem('user', JSON.stringify(response.user))
-      }
-      if (response.token) {
-        sessionStorage.setItem('token', response.token)
-      }
+      await signIn({ email, password })
+      router.push('/dashboard')
     } catch (err) {
-      setError(`Erro desconhecido. Tente novamente mais tarde. ${err}`)
+      setError(err instanceof Error ? err.message : 'Erro ao fazer login')
     } finally {
       setIsLoading(false)
     }
