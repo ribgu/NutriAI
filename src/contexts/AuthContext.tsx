@@ -1,3 +1,5 @@
+'use client'
+
 import { createContext, useContext, useState, ReactNode } from 'react'
 import Router from 'next/router'
 import axios from 'axios'
@@ -37,7 +39,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   async function signIn(command: LoginCommand): Promise<SignInResponse> {
     try {
-      const response = await axios.post<SignInResponse>('/user/signin', command, {
+      const response = await axios.post<SignInResponse>('api/user/signin', command, {
         headers: {
           'Content-Type': 'application/json'
         }
