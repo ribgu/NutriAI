@@ -22,7 +22,7 @@ const ActivityForm = () => {
     const userId = user ? JSON.parse(user).id : ''
 
     try {
-      await client.createActivityRecord({ userId, type, recordInfo })
+      await client.createActivityRecord({ userId, type, RecordInfo: recordInfo })
       router.push('/dashboard')
     } catch (err) {
       console.error('Error creating activity record:', err)
