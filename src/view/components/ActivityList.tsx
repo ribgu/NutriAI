@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import Client from '@/libs/clients/client'
-import { useSection } from '@/context/SectionContext'
 import { ActivityRecord } from '@/types/ActivityRecord'
 
 const ActivityList = () => {
   const [records, setRecords] = useState<ActivityRecord[]>([])
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const { id: userId } = useSection()
+  const user = sessionStorage.getItem('user')
+  const userId = user ? JSON.parse(user).id : ''
 
   useEffect(() => {
     const fetchRecords = async () => {
