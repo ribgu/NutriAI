@@ -1,11 +1,12 @@
-"use client"
+'use client'
 
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Client from '@/libs/clients/client'
 import { RecordType } from '@/types/RecordType'
+import { useAuth } from '@/contexts/AuthContext'
 
-const ActivityForm = () => {
+function ActivityForm() {
   const [type, setType] = useState<RecordType>('WATER')
   const [waterAmount, setWaterAmount] = useState('')
   const [foodDescription, setFoodDescription] = useState('')
@@ -13,15 +14,15 @@ const ActivityForm = () => {
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
+  const client = new Client()
+  const { user } = useAuth()
 
   const handleSubmit = async (e: React.FormEvent) => {
+    if (!user) return
+    const userId = user.id
     e.preventDefault()
     setError('')
     setIsLoading(true)
-
-    const client = new Client()
-    const user = sessionStorage.getItem('user')
-    const userId = user ? JSON.parse(user).id : ''
 
     let recordInfo = {}
     if (type === 'WATER') {

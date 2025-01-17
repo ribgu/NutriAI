@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import Client from '@/libs/clients/client'
 
-export function SignupForm() {
+export function Signup() {
   const client = new Client()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')

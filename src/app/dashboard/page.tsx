@@ -1,7 +1,7 @@
 import React from 'react'
 import AppLayout from '@/view/components/AppLayout/AppLayout'
-import ActivityForm from '@/view/components/ActivityForm'
-import ActivityList from '@/view/components/ActivityList'
+import ActivityForm from '@/view/components/ActivityForm/ActivityForm'
+import ActivityList from '@/view/components/ActivityList/ActivityList'
 
 export default function Dashboard() {
   return (

@@ -1,23 +1,25 @@
-"use client"
+'use client'
 
 import React, { useEffect, useState } from 'react'
 import Client from '@/libs/clients/client'
 import { ActivityRecord } from '@/types/ActivityRecord'
+import { useAuth } from '@/contexts/AuthContext'
 
-const ActivityList = () => {
+function ActivityList() {
   const [records, setRecords] = useState<ActivityRecord[]>([])
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const user = sessionStorage.getItem('user')
-  const userId = user ? JSON.parse(user).id : ''
+  const { user } = useAuth()
 
   useEffect(() => {
+    if(!user) return
+
     const fetchRecords = async () => {
       setIsLoading(true)
       const client = new Client()
 
       try {
-        const response = await client.getActivityRecords(userId)
+        const response = await client.getActivityRecords(user.id)
         setRecords(response.records)
       } catch (err) {
         setError(`Erro ao buscar registros de atividades. Tente novamente mais tarde. ${err}`)
@@ -27,7 +29,7 @@ const ActivityList = () => {
     }
 
     fetchRecords()
-  }, [userId])
+  }, [user])
 
   return (
     <div>
