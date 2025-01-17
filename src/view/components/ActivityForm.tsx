@@ -3,9 +3,10 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Client from '@/libs/clients/client'
+import { RecordType } from '@/types/RecordType'
 
 const ActivityForm = () => {
-  const [type, setType] = useState('WATER')
+  const [type, setType] = useState<RecordType>('WATER')
   const [recordInfo, setRecordInfo] = useState({})
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -17,7 +18,8 @@ const ActivityForm = () => {
     setIsLoading(true)
 
     const client = new Client()
-    const userId = sessionStorage.getItem('user') ? JSON.parse(sessionStorage.getItem('user')).id : ''
+    const user = sessionStorage.getItem('user')
+    const userId = user ? JSON.parse(user).id : ''
 
     try {
       await client.createActivityRecord({ userId, type, recordInfo })
@@ -41,7 +43,7 @@ const ActivityForm = () => {
           name="type"
           required
           value={type}
-          onChange={(e) => setType(e.target.value)}
+          onChange={(e) => setType(e.target.value as RecordType)}
           className="select select-bordered w-full"
         >
           <option value="WATER">Água</option>

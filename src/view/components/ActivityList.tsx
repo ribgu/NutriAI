@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Client from '@/libs/clients/client'
 import { useSection } from '@/context/SectionContext'
+import { ActivityRecord } from '@/types/ActivityRecord'
 
 const ActivityList = () => {
   const [records, setRecords] = useState<ActivityRecord[]>([])
