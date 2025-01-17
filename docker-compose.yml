@@ -1,23 +1,16 @@
-version: '3.8'
+version: '3.7'
 
 services:
-  db:
+  postgres:
     image: postgres:latest
-    container_name: database
+    env_file:
+      - .env
+    container_name: postgres
+    restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-    ports:
-      - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-    user: "postgres"
-    command: >
-      sh -c "
-        echo \"listen_addresses = '*'\" >> /var/lib/postgresql/data/postgresql.conf &&
-        echo \"host all all 0.0.0.0/0 md5\" >> /var/lib/postgresql/data/pg_hba.conf &&
-        postgres
-      "
-
-volumes:
-  postgres_data:
+      - ./postgres-data:/var/lib/postgresql/data 777
+    ports:
+      - 5432:5432

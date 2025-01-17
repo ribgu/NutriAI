@@ -19,8 +19,12 @@ export function LoginForm() {
 
     try {
       const response = await client.signIn({ email, password })
-      sessionStorage.setItem('user', JSON.stringify(response.user))
-      sessionStorage.setItem('token', response.token)
+      if (response.user) {
+        sessionStorage.setItem('user', JSON.stringify(response.user))
+      }
+      if (response.token) {
+        sessionStorage.setItem('token', response.token)
+      }
     } catch (err) {
       console.error('Login error:', err)
       setError('Erro desconhecido. Tente novamente mais tarde.')

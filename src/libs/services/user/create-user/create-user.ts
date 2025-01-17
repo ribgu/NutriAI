@@ -1,6 +1,7 @@
 import { prisma } from '../../../clients/prisma-client'
 import { Prisma } from '@prisma/client'
 import { hash } from 'bcryptjs'
+import { RecordType } from '@/types/RecordType'
 
 export type CreateUserCommand = {
   email: string
