@@ -1,9 +1,9 @@
-import { LoginForm } from '@/view/components/LoginForm'
+import { Login } from '@/view/pages/Login/Login'
 
-export default function Login() {
+export default function LoginPage() {
   return (
     <div className="bg-base-100 w-full h-[100vh] flex items-center justify-center">
-      <LoginForm />
+      <Login />
     </div>
   )
 }
