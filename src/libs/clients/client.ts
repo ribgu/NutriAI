@@ -2,6 +2,7 @@ import axios, { AxiosInstance } from 'axios'
 import { CreateUserCommand } from '../services/user/create-user/create-user'
 import { LoginCommand } from '../services/user/create-user/login'
 import { User } from '@prisma/client'
+import { ActivityRecord } from '@/types/ActivityRecord'
 
 type DefaultResponse = {
   message: string
@@ -11,12 +12,6 @@ type SignInResponse = {
   message: string
   token: string
   user: User
-}
-
-type ActivityRecord = {
-  userId: string
-  type: 'WATER' | 'MEAL' | 'EXERCISE' | 'SLEEP'
-  RecordInfo: Record<string, any>
 }
 
 type ActivityRecordResponse = {
