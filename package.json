@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "fix-lint": "next lint --fix"
+    "fix-lint": "next lint --fix",
+    "prebuiild": "prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^5.9.1",
