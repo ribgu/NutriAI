@@ -41,11 +41,13 @@ const ActivityList = () => {
         </div>
       ) : (
         <ul className="space-y-4">
-          {records.map((record) => (
-            <li key={record.id} className="p-4 border rounded-lg">
+          {records.map((record, index) => (
+            <li key={index} className="p-4 border rounded-lg">
               <p><strong>Tipo:</strong> {record.type}</p>
               <p><strong>Informações:</strong> {JSON.stringify(record.RecordInfo)}</p>
-              <p><strong>Data:</strong> {new Date(record.createdAt).toLocaleString()}</p>
+                {record.createdAt && (
+                <p><strong>Data:</strong> {new Date(record.createdAt).toLocaleString()}</p>
+                )}
             </li>
           ))}
         </ul>
