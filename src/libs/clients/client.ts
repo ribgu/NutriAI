@@ -13,19 +13,19 @@ type SignInResponse = {
   user: User
 }
 
-type CreateActivityRecordCommand = {
+type ActivityRecord = {
   userId: string
   type: 'WATER' | 'MEAL' | 'EXERCISE' | 'SLEEP'
-  recordInfo: Record<string, any>
+  RecordInfo: Record<string, any>
 }
 
-type CreateActivityRecordResponse = {
+type ActivityRecordResponse = {
   message: string
-  record: any
+  record: ActivityRecord
 }
 
 type GetActivityRecordsResponse = {
-  records: any[]
+  records: ActivityRecord[]
 }
 
 export default class Client {
@@ -74,9 +74,9 @@ export default class Client {
     }
   }
 
-  async createActivityRecord(data: CreateActivityRecordCommand): Promise<CreateActivityRecordResponse> {
+  async createActivityRecord(recordData: ActivityRecord): Promise<ActivityRecordResponse> {
     try {
-      const response = await this.axios.post<CreateActivityRecordResponse>('/activity', data, {
+      const response = await this.axios.post<ActivityRecordResponse>('/activity', recordData, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -92,9 +92,9 @@ export default class Client {
     }
   }
 
-  async getActivityRecords(): Promise<GetActivityRecordsResponse> {
+  async getActivityRecords(userId: string): Promise<GetActivityRecordsResponse> {
     try {
-      const response = await this.axios.get<GetActivityRecordsResponse>('/activity', {
+      const response = await this.axios.get<GetActivityRecordsResponse>(`/activity?userId=${userId}`, {
         headers: {
           'Content-Type': 'application/json'
         }

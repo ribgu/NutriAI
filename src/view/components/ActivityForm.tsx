@@ -1,51 +1,35 @@
-"use client";
-
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import Client from "@/libs/clients/client";
+import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
+import Client from '@/libs/clients/client'
 
 const ActivityForm = () => {
-  const [userId, setUserId] = useState("");
-  const [type, setType] = useState("WATER");
-  const [recordInfo, setRecordInfo] = useState({});
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
+  const [type, setType] = useState('WATER')
+  const [recordInfo, setRecordInfo] = useState({})
+  const [error, setError] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-    setIsLoading(true);
+    e.preventDefault()
+    setError('')
+    setIsLoading(true)
 
-    const client = new Client();
+    const client = new Client()
+    const userId = sessionStorage.getItem('user') ? JSON.parse(sessionStorage.getItem('user')).id : ''
 
     try {
-      await client.createActivityRecord({ userId, type, recordInfo });
-      router.push("/dashboard");
+      await client.createActivityRecord({ userId, type, recordInfo })
+      router.push('/dashboard')
     } catch (err) {
-      console.error("Error creating activity record:", err);
-      setError("Erro ao criar registro de atividade. Tente novamente mais tarde.");
+      console.error('Error creating activity record:', err)
+      setError('Erro ao criar registro de atividade. Tente novamente mais tarde.')
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="form-control">
-        <label className="label" htmlFor="userId">
-          <span className="label-text">ID do Usuário</span>
-        </label>
-        <input
-          id="userId"
-          name="userId"
-          type="text"
-          required
-          value={userId}
-          onChange={(e) => setUserId(e.target.value)}
-          className="input input-bordered w-full"
-        />
-      </div>
       <div className="form-control">
         <label className="label" htmlFor="type">
           <span className="label-text">Tipo de Atividade</span>
@@ -64,55 +48,22 @@ const ActivityForm = () => {
           <option value="SLEEP">Sono</option>
         </select>
       </div>
-      {type === "WATER" && (
-        <div className="form-control">
-          <label className="label" htmlFor="waterAmount">
-            <span className="label-text">Quantidade de Água (ml)</span>
-          </label>
-          <input
-            id="waterAmount"
-            name="waterAmount"
-            type="number"
-            required
-            value={recordInfo.amount || ""}
-            onChange={(e) => setRecordInfo({ ...recordInfo, amount: e.target.value })}
-            className="input input-bordered w-full"
-          />
-        </div>
-      )}
-      {type === "MEAL" && (
-        <div className="form-control">
-          <label className="label" htmlFor="mealDescription">
-            <span className="label-text">Descrição da Refeição</span>
-          </label>
-          <textarea
-            id="mealDescription"
-            name="mealDescription"
-            required
-            value={recordInfo.description || ""}
-            onChange={(e) => setRecordInfo({ ...recordInfo, description: e.target.value })}
-            className="textarea textarea-bordered w-full"
-          />
-        </div>
-      )}
-      {type === "EXERCISE" && (
-        <div className="form-control">
-          <label className="label" htmlFor="exerciseDescription">
-            <span className="label-text">Descrição do Exercício</span>
-          </label>
-          <textarea
-            id="exerciseDescription"
-            name="exerciseDescription"
-            required
-            value={recordInfo.description || ""}
-            onChange={(e) => setRecordInfo({ ...recordInfo, description: e.target.value })}
-            className="textarea textarea-bordered w-full"
-          />
-        </div>
-      )}
+      <div className="form-control">
+        <label className="label" htmlFor="recordInfo">
+          <span className="label-text">Informações do Registro</span>
+        </label>
+        <textarea
+          id="recordInfo"
+          name="recordInfo"
+          required
+          value={JSON.stringify(recordInfo)}
+          onChange={(e) => setRecordInfo(JSON.parse(e.target.value))}
+          className="textarea textarea-bordered w-full"
+        />
+      </div>
       <div className="form-control mt-6">
         <button type="submit" className="btn btn-primary w-full" disabled={isLoading}>
-          {isLoading ? "Adicionando..." : "Adicionar Registro"}
+          {isLoading ? 'Adicionando...' : 'Adicionar Registro'}
         </button>
       </div>
       {error && (
@@ -124,7 +75,7 @@ const ActivityForm = () => {
         </div>
       )}
     </form>
-  );
-};
+  )
+}
 
-export default ActivityForm;
+export default ActivityForm
