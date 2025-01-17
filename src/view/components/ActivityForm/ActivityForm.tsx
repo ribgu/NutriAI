@@ -5,6 +5,9 @@ import { useRouter } from 'next/navigation'
 import Client from '@/libs/clients/client'
 import { RecordType } from '@/types/RecordType'
 import { useAuth } from '@/contexts/AuthContext'
+import { WaterForm } from './Forms/WaterForm'
+import { MealForm } from './Forms/MealForm'
+import { ExerciseForm } from './Forms/ExerciseForm'
 
 function ActivityForm() {
   const [type, setType] = useState<RecordType>('WATER')
@@ -64,50 +67,16 @@ function ActivityForm() {
         </select>
       </div>
       {type === 'WATER' && (
-        <div className="form-control">
-          <label className="label" htmlFor="waterAmount">
-            <span className="label-text">Quantidade de Água (ml)</span>
-          </label>
-          <input
-            id="waterAmount"
-            name="waterAmount"
-            type="number"
-            required
-            value={waterAmount}
-            onChange={(e) => setWaterAmount(e.target.value)}
-            className="input input-bordered w-full"
-          />
-        </div>
+        <WaterForm />
       )}
       {type === 'MEAL' && (
-        <div className="form-control">
-          <label className="label" htmlFor="foodDescription">
-            <span className="label-text">Descrição da Refeição</span>
-          </label>
-          <textarea
-            id="foodDescription"
-            name="foodDescription"
-            required
-            value={foodDescription}
-            onChange={(e) => setFoodDescription(e.target.value)}
-            className="textarea textarea-bordered w-full"
-          />
-        </div>
+        <MealForm />
       )}
       {type === 'EXERCISE' && (
-        <div className="form-control">
-          <label className="label" htmlFor="trainingDescription">
-            <span className="label-text">Descrição do Exercício</span>
-          </label>
-          <textarea
-            id="trainingDescription"
-            name="trainingDescription"
-            required
-            value={trainingDescription}
-            onChange={(e) => setTrainingDescription(e.target.value)}
-            className="textarea textarea-bordered w-full"
-          />
-        </div>
+        <ExerciseForm
+          setTrainingDescription={setTrainingDescription}
+          trainingDescription={trainingDescription}
+        />
       )}
       <div className="form-control mt-6">
         <button type="submit" className="btn btn-primary w-full" disabled={isLoading}>
