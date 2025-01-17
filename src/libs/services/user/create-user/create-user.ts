@@ -11,15 +11,12 @@ export type CreateUserCommand = {
   additionalInfo?: Prisma.JsonValue
 }
 
-const JWT_SECRET = process.env.JWT_SECRET!
-
 export async function createUser(user: CreateUserCommand) {
   const { email, password, name, weight, height, additionalInfo } = user
 
   const hashedPassword = await hash(password, 10)
   console.log('password:', password)
   console.log('Hashed password:', hashedPassword)
-  console.log('secret:', JWT_SECRET)
 
   const existingUser = await prisma.user.findUnique({ where: { email } })
   if (existingUser) {
