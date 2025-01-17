@@ -1,12 +1,12 @@
-'use client'
-
 import React, { useEffect, useState } from 'react'
 import Client from '@/libs/clients/client'
+import { useSection } from '@/context/SectionContext'
 
 const ActivityList = () => {
-  const [records, setRecords] = useState([])
+  const [records, setRecords] = useState<ActivityRecord[]>([])
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const { id: userId } = useSection()
 
   useEffect(() => {
     const fetchRecords = async () => {
@@ -14,7 +14,7 @@ const ActivityList = () => {
       const client = new Client()
 
       try {
-        const response = await client.getActivityRecords()
+        const response = await client.getActivityRecords(userId)
         setRecords(response.records)
       } catch (err) {
         console.error('Error fetching activity records:', err)
@@ -25,7 +25,7 @@ const ActivityList = () => {
     }
 
     fetchRecords()
-  }, [])
+  }, [userId])
 
   return (
     <div>

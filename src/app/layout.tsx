@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
 import './globals.css'
+import { SectionProvider } from '@/context/SectionContext'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -21,9 +22,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={poppins.className}
-      >
-        {children}
+      <body className={poppins.className}>
+        <SectionProvider>
+          {children}
+        </SectionProvider>
       </body>
     </html>
   )

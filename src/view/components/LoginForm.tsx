@@ -3,14 +3,12 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Client from '@/libs/clients/client'
-import { useRouter } from 'next/navigation'
 
 export function LoginForm() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -21,9 +19,12 @@ export function LoginForm() {
 
     try {
       const response = await client.signIn({ email, password })
-      sessionStorage.setItem('user', JSON.stringify(response.user))
-      sessionStorage.setItem('token', response.token)
-      router.push('/dashboard')
+      if (response.user) {
+        sessionStorage.setItem('user', JSON.stringify(response.user))
+      }
+      if (response.token) {
+        sessionStorage.setItem('token', response.token)
+      }
     } catch (err) {
       console.error('Login error:', err)
       setError('Erro desconhecido. Tente novamente mais tarde.')
