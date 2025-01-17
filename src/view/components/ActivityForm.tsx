@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Client from '@/libs/clients/client'
 import { RecordType } from '@/types/RecordType'
@@ -10,7 +10,6 @@ const ActivityForm = () => {
   const [waterAmount, setWaterAmount] = useState('')
   const [foodDescription, setFoodDescription] = useState('')
   const [trainingDescription, setTrainingDescription] = useState('')
-  const [recordInfo, setRecordInfo] = useState({})
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
@@ -37,8 +36,7 @@ const ActivityForm = () => {
       await client.createActivityRecord({ userId, type, RecordInfo: recordInfo })
       router.push('/dashboard')
     } catch (err) {
-      console.error('Error creating activity record:', err)
-      setError('Erro ao criar registro de atividade. Tente novamente mais tarde.')
+      setError(`Erro ao criar registro de atividade. Tente novamente mais tarde. ${err}`)
     } finally {
       setIsLoading(false)
     }

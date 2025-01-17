@@ -20,8 +20,7 @@ const ActivityList = () => {
         const response = await client.getActivityRecords(userId)
         setRecords(response.records)
       } catch (err) {
-        console.error('Error fetching activity records:', err)
-        setError('Erro ao buscar registros de atividades. Tente novamente mais tarde.')
+        setError(`Erro ao buscar registros de atividades. Tente novamente mais tarde. ${err}`)
       } finally {
         setIsLoading(false)
       }
@@ -47,9 +46,9 @@ const ActivityList = () => {
             <li key={index} className="p-4 border rounded-lg">
               <p><strong>Tipo:</strong> {record.type}</p>
               <p><strong>Informações:</strong> {JSON.stringify(record.RecordInfo)}</p>
-                {record.createdAt && (
+              {record.createdAt && (
                 <p><strong>Data:</strong> {new Date(record.createdAt).toLocaleString()}</p>
-                )}
+              )}
             </li>
           ))}
         </ul>
