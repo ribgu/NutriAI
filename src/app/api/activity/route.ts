@@ -13,6 +13,17 @@ export async function POST(request: Request) {
     const body = await request.json()
     const validatedData = activitySchema.parse(body)
 
+    if (validatedData.type === 'SLEEP') {
+      const { sleepHour, wakeUpHour } = validatedData.RecordInfo
+      const sleepTime = new Date(`1970-01-01T${sleepHour}:00`)
+      const wakeTime = new Date(`1970-01-01T${wakeUpHour}:00`)
+      let sleepDuration = (wakeTime.getTime() - sleepTime.getTime()) / (1000 * 60 * 60)
+      if (sleepDuration < 0) {
+        sleepDuration += 24
+      }
+      validatedData.RecordInfo.sleepDuration = sleepDuration
+    }
+
     const newRecord = await prisma.record.create({
       data: {
         userId: validatedData.userId,

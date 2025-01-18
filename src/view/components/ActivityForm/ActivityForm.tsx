@@ -1,24 +1,33 @@
 'use client'
 
 import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import Client from '@/libs/clients/client'
 import { RecordType } from '@/types/RecordType'
 import { useAuth } from '@/contexts/AuthContext'
 import { WaterForm } from './Forms/WaterForm'
 import { MealForm } from './Forms/MealForm'
 import { ExerciseForm } from './Forms/ExerciseForm'
+import { SleepForm } from './Forms/SleepForm'
 
 function ActivityForm() {
   const [type, setType] = useState<RecordType>('WATER')
   const [waterAmount, setWaterAmount] = useState('')
   const [foodDescription, setFoodDescription] = useState('')
   const [trainingDescription, setTrainingDescription] = useState('')
+  const [sleepStart, setSleepStart] = useState('')
+  const [sleepEnd, setSleepEnd] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const router = useRouter()
   const client = new Client()
   const { user } = useAuth()
+
+  function getSleepHopurs(start: string, end: string): number {
+    const diffMilissegundos = new Date(end).getTime() - new Date(start).getTime()
+  
+    const hours = diffMilissegundos / (1000 * 60 * 60)
+
+    return hours
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     if (!user) return
@@ -34,11 +43,13 @@ function ActivityForm() {
       recordInfo = { foodDescription }
     } else if (type === 'EXERCISE') {
       recordInfo = { trainingDescription }
+    } else if (type === 'SLEEP') {
+      const sleepHours = getSleepHopurs(sleepStart,sleepEnd).toString()
+      recordInfo = { sleepStart, sleepEnd, sleepHours }
     }
 
     try {
       await client.createActivityRecord({ userId, type, RecordInfo: recordInfo })
-      router.push('/dashboard')
     } catch (err) {
       setError(`Erro ao criar registro de atividade. Tente novamente mais tarde. ${err}`)
     } finally {
@@ -82,6 +93,14 @@ function ActivityForm() {
         <ExerciseForm
           setTrainingDescription={setTrainingDescription}
           trainingDescription={trainingDescription}
+        />
+      )}
+      {type === 'SLEEP' && (
+        <SleepForm
+          sleepStart={sleepStart}
+          setSleepStart={setSleepStart}
+          sleepEnd={sleepEnd}
+          setSleepEnd={setSleepEnd}
         />
       )}
       <div className="form-control mt-6">
