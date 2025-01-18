@@ -8,6 +8,7 @@ import { WaterForm } from './Forms/WaterForm'
 import { MealForm } from './Forms/MealForm'
 import { ExerciseForm } from './Forms/ExerciseForm'
 import { SleepForm } from './Forms/SleepForm'
+import { useRouter } from 'next/navigation'
 
 function ActivityForm() {
   const [type, setType] = useState<RecordType>('WATER')
@@ -19,6 +20,7 @@ function ActivityForm() {
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const client = new Client()
+  const router = useRouter()
   const { user } = useAuth()
 
   function getSleepHopurs(start: string, end: string): number {
@@ -30,7 +32,8 @@ function ActivityForm() {
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    if (!user) return
+    if (!user) router.push('/login')
+    if(!user) return
     const userId = user.id
     e.preventDefault()
     setError('')
