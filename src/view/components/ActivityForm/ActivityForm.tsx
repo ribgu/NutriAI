@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import Client from '@/libs/clients/client'
 import { RecordType } from '@/types/RecordType'
 import { useAuth } from '@/contexts/AuthContext'
@@ -15,14 +14,20 @@ function ActivityForm() {
   const [waterAmount, setWaterAmount] = useState('')
   const [foodDescription, setFoodDescription] = useState('')
   const [trainingDescription, setTrainingDescription] = useState('')
-  const [sleepHour, setSleepHour] = useState('')
-  const [wakeUpHour, setWakeUpHour] = useState('')
-  const [sleepDuration, setSleepDuration] = useState(0)
+  const [sleepStart, setSleepStart] = useState('')
+  const [sleepEnd, setSleepEnd] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const router = useRouter()
   const client = new Client()
   const { user } = useAuth()
+
+  function getSleepHopurs(start: string, end: string): number {
+    const diffMilissegundos = new Date(end).getTime() - new Date(start).getTime()
+  
+    const hours = diffMilissegundos / (1000 * 60 * 60)
+
+    return hours
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     if (!user) return
@@ -39,12 +44,12 @@ function ActivityForm() {
     } else if (type === 'EXERCISE') {
       recordInfo = { trainingDescription }
     } else if (type === 'SLEEP') {
-      recordInfo = { sleepHour, wakeUpHour, sleepDuration }
+      const sleepHours = getSleepHopurs(sleepStart,sleepEnd).toString()
+      recordInfo = { sleepStart, sleepEnd, sleepHours }
     }
 
     try {
       await client.createActivityRecord({ userId, type, RecordInfo: recordInfo })
-      router.push('/dashboard')
     } catch (err) {
       setError(`Erro ao criar registro de atividade. Tente novamente mais tarde. ${err}`)
     } finally {
@@ -92,12 +97,10 @@ function ActivityForm() {
       )}
       {type === 'SLEEP' && (
         <SleepForm
-          sleepHour={sleepHour}
-          setSleepHour={setSleepHour}
-          wakeUpHour={wakeUpHour}
-          setWakeUpHour={setWakeUpHour}
-          sleepDuration={sleepDuration}
-          setSleepDuration={setSleepDuration}
+          sleepStart={sleepStart}
+          setSleepStart={setSleepStart}
+          sleepEnd={sleepEnd}
+          setSleepEnd={setSleepEnd}
         />
       )}
       <div className="form-control mt-6">
