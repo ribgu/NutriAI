@@ -21,7 +21,11 @@ export async function login(loginData: LoginCommand) {
     throw new Error('Credenciais inválidas, a senha está incorreta')
   }
 
-  const token = jwt.sign({ userId: user.id }, JWT_SECRET)
+  const token = jwt.sign(
+    { userId: user.id },
+    JWT_SECRET,
+    { expiresIn: '7d' }
+  )
 
   return { token, user }
 }
