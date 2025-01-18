@@ -19,7 +19,7 @@ function ActivityList() {
       const client = new Client()
 
       try {
-        const response = await client.getActivityRecords(user.id)
+        const response = await client.getActivityRecords({ userId: user.id, type: 'WATER' })
         setRecords(response.records)
       } catch (err) {
         setError(`Erro ao buscar registros de atividades. Tente novamente mais tarde. ${err}`)
