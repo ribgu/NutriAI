@@ -1,4 +1,6 @@
 import { prisma } from '@/libs/clients/prisma-client'
+import { getActivities } from '@/libs/services/activity/getActivities'
+import { ActivityType } from '@/types/ActivityType'
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
@@ -12,17 +14,6 @@ export async function POST(request: Request) {
   try {
     const body = await request.json()
     const validatedData = activitySchema.parse(body)
-
-    if (validatedData.type === 'SLEEP') {
-      const { sleepHour, wakeUpHour } = validatedData.RecordInfo
-      const sleepTime = new Date(`1970-01-01T${sleepHour}:00`)
-      const wakeTime = new Date(`1970-01-01T${wakeUpHour}:00`)
-      let sleepDuration = (wakeTime.getTime() - sleepTime.getTime()) / (1000 * 60 * 60)
-      if (sleepDuration < 0) {
-        sleepDuration += 24
-      }
-      validatedData.RecordInfo.sleepDuration = sleepDuration
-    }
 
     const newRecord = await prisma.record.create({
       data: {
@@ -62,6 +53,7 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url)
     const userId = searchParams.get('userId')
+    const type = searchParams.get('type') as ActivityType
 
     if (!userId) {
       return NextResponse.json(
@@ -70,9 +62,7 @@ export async function GET(request: Request) {
       )
     }
 
-    const records = await prisma.record.findMany({
-      where: { userId }
-    })
+    const records = getActivities({ userId, type })
 
     return NextResponse.json(
       { records },

@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from 'axios'
 import { CreateUserCommand } from '../services/user/create-user/create-user'
 import { ActivityRecord } from '@/types/ActivityRecord'
+import { getActivityCommand } from '@/types/GetActivityCommand'
 
 type DefaultResponse = {
   message: string
@@ -58,9 +59,9 @@ export default class Client {
     }
   }
 
-  async getActivityRecords(userId: string): Promise<GetActivityRecordsResponse> {
+  async getActivityRecords(command: getActivityCommand): Promise<GetActivityRecordsResponse> {
     try {
-      const response = await this.axios.get<GetActivityRecordsResponse>(`/activity?userId=${userId}`, {
+      const response = await this.axios.get<GetActivityRecordsResponse>(`/activity?userId=${command.userId}&type=${command.type}`, {
         headers: {
           'Content-Type': 'application/json'
         }
