@@ -5,7 +5,10 @@ export async function getActivities(command: getActivityCommand) {
   const { userId, type } = command
   
   const records = await prisma.record.findMany({
-    where: { userId, type }
+    where: {
+      userId,
+      ...(type && { type })
+    }
   })
 
   return records

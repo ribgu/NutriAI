@@ -61,7 +61,8 @@ export default class Client {
 
   async getActivityRecords(command: getActivityCommand): Promise<GetActivityRecordsResponse> {
     try {
-      const response = await this.axios.get<GetActivityRecordsResponse>(`/activity?userId=${command.userId}&type=${command.type}`, {
+      const url = `/activity?userId=${command.userId}${command.type ? `&type=${command.type}` : ''}`
+      const response = await this.axios.get<GetActivityRecordsResponse>(url, {
         headers: {
           'Content-Type': 'application/json'
         }

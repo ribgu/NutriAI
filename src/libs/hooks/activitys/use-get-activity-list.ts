@@ -12,8 +12,8 @@ export function useGetActivityList() {
     queryKey: ['activities', userId],
     queryFn: async () => {
       if (!userId) throw new Error('Usuário não autenticado')
-      const response = await client.getActivityRecords({ userId, type: 'WATER' })
-
+      const response = await client.getActivityRecords({ userId })
+    
       return response.records
     },
     enabled: !!userId
