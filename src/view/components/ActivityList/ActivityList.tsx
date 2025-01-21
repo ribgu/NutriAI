@@ -1,35 +1,10 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
-import Client from '@/libs/clients/client'
-import { ActivityRecord } from '@/types/ActivityRecord'
-import { useAuth } from '@/contexts/AuthContext'
+import React from 'react'
+import { useGetActivityList } from '@/libs/hooks/use-get-activity-list'
 
 function ActivityList() {
-  const [records, setRecords] = useState<ActivityRecord[]>([])
-  const [error, setError] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
-  const { user } = useAuth()
-
-  useEffect(() => {
-    if(!user) return
-
-    const fetchRecords = async () => {
-      setIsLoading(true)
-      const client = new Client()
-
-      try {
-        const response = await client.getActivityRecords({ userId: user.id, type: 'WATER' })
-        setRecords(response.records)
-      } catch (err) {
-        setError(`Erro ao buscar registros de atividades. Tente novamente mais tarde. ${err}`)
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
-    fetchRecords()
-  }, [user])
+  const { data: records, isLoading, error } = useGetActivityList()
 
   return (
     <div>
@@ -40,19 +15,23 @@ function ActivityList() {
           <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
-          <span>{error}</span>
+          <span>{error.message}</span>
         </div>
       ) : (
         <ul className="space-y-4">
-          {records.map((record, index) => (
-            <li key={index} className="p-4 border rounded-lg">
-              <p><strong>Tipo:</strong> {record.type}</p>
-              <p><strong>Informações:</strong> {JSON.stringify(record.RecordInfo)}</p>
-              {record.createdAt && (
-                <p><strong>Data:</strong> {new Date(record.createdAt).toLocaleString()}</p>
-              )}
-            </li>
-          ))}
+          {Array.isArray(records) && records.length > 0 ? (
+            records.map((record, index) => (
+              <li key={index} className="p-4 border rounded-lg">
+                <p><strong>Tipo:</strong> {record.type}</p>
+                <p><strong>Informações:</strong> {JSON.stringify(record.RecordInfo)}</p>
+                {record.createdAt && (
+                  <p><strong>Data:</strong> {new Date(record.createdAt).toLocaleString()}</p>
+                )}
+              </li>
+            ))
+          ) : (
+            <p>Nenhum registro encontrado.</p>
+          )}
         </ul>
       )}
     </div>

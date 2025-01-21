@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { Sidebar, SidebarBody, SidebarLink } from '../Sidebar/Sidebar'
+import { useAuth } from '@/contexts/AuthContext'
 
 interface AppLayoutProps {
   children: React.ReactNode
@@ -44,6 +45,9 @@ const links = [
 
 export const AppLayout = ({ children }: AppLayoutProps) => {
   const [open, setOpen] = useState(false)
+  const { user, isLoading } = useAuth()
+
+  const userName = user?.name ?? 'Carregando...'
 
   return (
     <div className="flex h-screen">
@@ -61,7 +65,7 @@ export const AppLayout = ({ children }: AppLayoutProps) => {
           <div>
             <SidebarLink
               link={{
-                label: 'Seiya',
+                label: isLoading ? 'Carregando...' : (userName ?? 'Usuário não autenticado'),
                 href: '#',
                 icon: (
                   <Image
