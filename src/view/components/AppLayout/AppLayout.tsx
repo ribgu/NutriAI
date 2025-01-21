@@ -45,7 +45,9 @@ const links = [
 
 export const AppLayout = ({ children }: AppLayoutProps) => {
   const [open, setOpen] = useState(false)
-  const { user } = useAuth()
+  const { user, isLoading } = useAuth()
+
+  const userName = user?.name ?? 'Carregando...'
 
   return (
     <div className="flex h-screen">
@@ -63,7 +65,7 @@ export const AppLayout = ({ children }: AppLayoutProps) => {
           <div>
             <SidebarLink
               link={{
-                label: user?.name || 'Não autenticado',
+                label: isLoading ? 'Carregando...' : (userName ?? 'Usuário não autenticado'),
                 href: '#',
                 icon: (
                   <Image

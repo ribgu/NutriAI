@@ -22,6 +22,7 @@ type AuthContextData = {
   token: string | null
   user: User | null
   isAuthenticated: boolean
+  isLoading: boolean
   signIn: (credentials: LoginCommand) => Promise<SignInResponse>
   signOut: () => void
   getUserId: () => string | null
@@ -72,38 +73,28 @@ const getUserFromStorage = (): { user: User | null, token: string | null } => {
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null)
   const [token, setToken] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
   const isAuthenticated = !!user
 
   const getUserId = () => {
-    if (user?.id) return user.id
-    if (typeof window !== 'undefined') {
-      return sessionStorage.getItem('userId')
-    }
-
-    return null
+    return user?.id || null
   }
 
   const getStoredUser = () => {
-    if (user) return user
-    if (typeof window === 'undefined') return null
-
-    const id = sessionStorage.getItem('userId')
-    if (!id) return null
-
-    return {
-      id,
-      name: sessionStorage.getItem('userName') || '',
-      email: sessionStorage.getItem('userEmail') || '',
-      role: sessionStorage.getItem('userRole') || ''
-    }
+    return user
   }
 
   useEffect(() => {
-    const stored = getUserFromStorage()
-    if (stored.user && stored.token) {
-      setUser(stored.user)
-      setToken(stored.token)
+    const loadUserFromStorage = () => {
+      const stored = getUserFromStorage()
+      if (stored.user && stored.token) {
+        setUser(stored.user)
+        setToken(stored.token)
+      }
+      setIsLoading(false)
     }
+
+    loadUserFromStorage()
   }, [])
 
   useEffect(() => {
@@ -138,11 +129,16 @@ export function AuthProvider({ children }: AuthProviderProps) {
     Router.push('/')
   }
 
+  if (isLoading) {
+    return null // or a loading spinner
+  }
+
   return (
     <AuthContext.Provider value={{ 
       token, 
       user, 
-      isAuthenticated, 
+      isAuthenticated,
+      isLoading, 
       signIn, 
       signOut,
       getUserId,
