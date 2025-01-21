@@ -53,7 +53,7 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url)
     const userId = searchParams.get('userId')
-    const type = searchParams.get('type') as ActivityType
+    const type = searchParams.get('type') as ActivityType | null
 
     if (!userId) {
       return NextResponse.json(
@@ -62,7 +62,7 @@ export async function GET(request: Request) {
       )
     }
 
-    const records = getActivities({ userId, type })
+    const records = await getActivities({ userId, type: type || undefined })
 
     return NextResponse.json(
       { records },
