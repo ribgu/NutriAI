@@ -19,15 +19,17 @@ function ActivityList() {
         </div>
       ) : (
         <ul className="space-y-4">
-          {records ? records.map((record, index) => (
-            <li key={index} className="p-4 border rounded-lg">
-              <p><strong>Tipo:</strong> {record.type}</p>
-              <p><strong>Informações:</strong> {JSON.stringify(record.RecordInfo)}</p>
-              {record.createdAt && (
-                <p><strong>Data:</strong> {new Date(record.createdAt).toLocaleString()}</p>
-              )}
-            </li>
-          )) : (
+          {Array.isArray(records) && records.length > 0 ? (
+            records.map((record, index) => (
+              <li key={index} className="p-4 border rounded-lg">
+                <p><strong>Tipo:</strong> {record.type}</p>
+                <p><strong>Informações:</strong> {JSON.stringify(record.RecordInfo)}</p>
+                {record.createdAt && (
+                  <p><strong>Data:</strong> {new Date(record.createdAt).toLocaleString()}</p>
+                )}
+              </li>
+            ))
+          ) : (
             <p>Nenhum registro encontrado.</p>
           )}
         </ul>
