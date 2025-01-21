@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
 import './globals.css'
-import { AuthProvider } from '@/contexts/AuthContext'
+import { Providers } from './Providers'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -22,11 +22,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <AuthProvider>
-        <body className={poppins.className}>
+      <body className={poppins.className}>
+        <Providers>
           {children}
-        </body>
-      </AuthProvider>
+        </Providers>
+      </body>
     </html>
   )
 }
