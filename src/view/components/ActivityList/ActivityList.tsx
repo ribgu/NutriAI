@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { useGetActivityList } from '@/libs/hooks/use-get-activity-list'
+import { useGetActivityList } from '@/libs/hooks/activitys/use-get-activity-list'
 
 function ActivityList() {
   const { data: records, isLoading, error } = useGetActivityList()

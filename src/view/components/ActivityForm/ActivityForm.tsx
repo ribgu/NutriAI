@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useState } from 'react'
-import Client from '@/libs/clients/client'
 import { RecordType } from '@/types/RecordType'
 import { useAuth } from '@/contexts/AuthContext'
 import { WaterForm } from './Forms/WaterForm'
@@ -9,6 +8,7 @@ import { MealForm } from './Forms/MealForm'
 import { ExerciseForm } from './Forms/ExerciseForm'
 import { SleepForm } from './Forms/SleepForm'
 import { useRouter } from 'next/navigation'
+import { useSaveActivity } from '@/libs/hooks/activitys/use-save-activity'
 
 function ActivityForm() {
   const [type, setType] = useState<RecordType>('WATER')
@@ -17,11 +17,9 @@ function ActivityForm() {
   const [trainingDescription, setTrainingDescription] = useState('')
   const [sleepStart, setSleepStart] = useState('')
   const [sleepEnd, setSleepEnd] = useState('')
-  const [error, setError] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
-  const client = new Client()
   const router = useRouter()
   const { user } = useAuth()
+  const mutation = useSaveActivity()
 
   function getSleepHopurs(start: string, end: string): number {
     const diffMilissegundos = new Date(end).getTime() - new Date(start).getTime()
@@ -31,13 +29,19 @@ function ActivityForm() {
     return hours
   }
 
+  const resetForm = () => {
+    setWaterAmount('')
+    setFoodDescription('')
+    setTrainingDescription('')
+    setSleepStart('')
+    setSleepEnd('')
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     if (!user) router.push('/login')
     if(!user) return
     const userId = user.id
     e.preventDefault()
-    setError('')
-    setIsLoading(true)
 
     let recordInfo = {}
     if (type === 'WATER') {
@@ -51,13 +55,15 @@ function ActivityForm() {
       recordInfo = { sleepStart, sleepEnd, sleepHours }
     }
 
-    try {
-      await client.createActivityRecord({ userId, type, RecordInfo: recordInfo })
-    } catch (err) {
-      setError(`Erro ao criar registro de atividade. Tente novamente mais tarde. ${err}`)
-    } finally {
-      setIsLoading(false)
-    }
+    mutation.mutate(
+      { userId, type, RecordInfo: recordInfo },
+      {
+        onSuccess: () => {
+          resetForm()
+          router.push('/dashboard')
+        }
+      }
+    )
   }
 
   return (
@@ -107,16 +113,30 @@ function ActivityForm() {
         />
       )}
       <div className="form-control mt-6">
-        <button type="submit" className="btn btn-primary w-full" disabled={isLoading}>
-          {isLoading ? 'Adicionando...' : 'Adicionar Registro'}
+        <button 
+          type="submit" 
+          className="btn btn-primary w-full" 
+          disabled={mutation.isPending}
+        >
+          {mutation.isPending ? 'Adicionando...' : 'Adicionar Registro'}
         </button>
       </div>
-      {error && (
+
+      {mutation.isError && (
         <div className="alert alert-error mt-4">
           <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
-          <span>{error}</span>
+          <span>{(mutation.error as Error).message}</span>
+        </div>
+      )}
+
+      {mutation.isSuccess && (
+        <div className="alert alert-success mt-4">
+          <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span>Registro adicionado com sucesso!</span>
         </div>
       )}
     </form>
