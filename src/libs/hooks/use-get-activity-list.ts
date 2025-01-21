@@ -3,17 +3,19 @@ import Client from '@/libs/clients/client'
 import { useAuth } from '@/contexts/AuthContext'
 
 export function useGetActivityList() {
-  const { user } = useAuth()
+  const { getUserId } = useAuth()
   const client = new Client()
+  
+  const userId = getUserId()
 
   return useQuery({
-    queryKey: ['activities', user?.id],
+    queryKey: ['activities', userId],
     queryFn: async () => {
-      if (!user) throw new Error('Usuário não autenticado')
-      const response = await client.getActivityRecords({ userId: user.id, type: 'WATER' })
+      if (!userId) throw new Error('Usuário não autenticado')
+      const response = await client.getActivityRecords({ userId, type: 'WATER' })
 
       return response.records
     },
-    enabled: !!user
+    enabled: !!userId
   })
 }
