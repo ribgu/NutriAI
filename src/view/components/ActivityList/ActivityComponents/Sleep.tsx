@@ -1,56 +1,31 @@
-import { SleepRecord } from '@/types/RecordType'
+import { SleepRecordInfo } from '@/types/RecordInfo'
+import { ZzzIcon } from '@/view/components/Icons/Icons'
 
 interface SleepProps {
-  recordInfo: SleepRecord
+  recordInfo: SleepRecordInfo
 }
 
 export function Sleep({ recordInfo }: SleepProps) {
   const { sleepStart, sleepEnd, sleepHours } = recordInfo
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('pt-BR', {
-      weekday: 'long',
-      day: 'numeric',
-      month: 'long'
-    })
-  }
-
-  const formatTime = (dateString: string) => {
-    return new Date(dateString).toLocaleTimeString('pt-BR', {
-      hour: '2-digit',
-      minute: '2-digit'
-    })
-  }
-
-  const getSleepQuality = (hours: number) => {
-    if (hours < 6) return { text: 'Insuficiente', color: 'text-error' }
-    if (hours < 7) return { text: 'Regular', color: 'text-warning' }
-    if (hours <= 9) return { text: 'Ótima', color: 'text-success' }
-    
-    return { text: 'Excessiva', color: 'text-warning' }
-  }
-
-  const hours = Number(sleepHours)
-  const quality = getSleepQuality(hours)
+  const startTime = new Date(sleepStart).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
+  const endTime = new Date(sleepEnd).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
 
   return (
-    <div className="space-y-4">
-      <h3 className="text-xl font-semibold text-primary">
-        Noite de sono de {formatDate(sleepStart)}
-      </h3>
-      <div className="grid gap-3 pl-2">
-        <div className="flex items-center gap-3">
-          <span className="text-sm font-medium">Horário:</span>
-          <span>{formatTime(sleepStart)} às {formatTime(sleepEnd)}</span>
-        </div>
-        <div className="flex items-center gap-3">
-          <span className="text-sm font-medium">Duração:</span>
-          <span>{hours.toFixed(1)} horas</span>
-        </div>
-        <div className="flex items-center gap-3">
-          <span className="text-sm font-medium">Qualidade:</span>
-          <span className={`${quality.color} font-medium`}>{quality.text}</span>
-        </div>
+    <div className="flex items-start gap-4">
+      <div className="p-2 bg-indigo-100 rounded-lg">
+        <ZzzIcon className="w-6 h-6 text-indigo-500" />
+      </div>
+      <div>
+        <h3 className="text-lg font-semibold mb-1">Sono</h3>
+        <p className="space-y-1">
+          <span className="block text-sm">
+            De <span className="font-medium">{startTime}</span> até{' '}
+            <span className="font-medium">{endTime}</span>
+          </span>
+          <span className="block text-sm text-gray-600">
+            Duração: {sleepHours} horas
+          </span>
+        </p>
       </div>
     </div>
   )
