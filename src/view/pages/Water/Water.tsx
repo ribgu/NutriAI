@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import ActivityForm from '@/view/components/ActivityForm/ActivityForm'
 import ActivityList from '@/view/components/ActivityList/ActivityList'
+import { XIcon } from 'lucide-react'
 
 export function Water() {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -30,7 +31,7 @@ export function Water() {
                 onClick={() => setIsModalOpen(false)}
                 className="text-gray-500 hover:text-gray-700"
               >
-                ×
+                <XIcon className="h-6 w-6" />
               </button>
             </div>
             <ActivityForm activityType='WATER' />
