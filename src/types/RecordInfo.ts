@@ -1,5 +1,5 @@
 export type WaterRecordInfo = {
-  waterAmount: string
+  waterAmount: number
 }
 
 export type MealRecordInfo = {

@@ -2,9 +2,9 @@
 
 import React from 'react'
 import { useGetActivityList } from '@/libs/hooks/activitys/use-get-activity-list'
-import { Sleep } from './ActivityComponents'
+import { Sleep, Water } from './ActivityComponents'
 import { ActivityRecord } from '@/types/ActivityRecord'
-import { SleepRecordInfo } from '@/types/RecordInfo'
+import { SleepRecordInfo, WaterRecordInfo } from '@/types/RecordInfo'
 
 function ActivityList() {
   const { data: records, isLoading, error } = useGetActivityList()
@@ -12,8 +12,14 @@ function ActivityList() {
   const renderRecordInfo = (record: ActivityRecord) => {
     if (record.type === 'SLEEP') {
       const sleepInfo = record.RecordInfo as unknown as SleepRecordInfo
-      
+
       return <Sleep recordInfo={sleepInfo} />
+    }
+    
+    if (record.type === 'WATER') {
+      const waterInfo = record.RecordInfo as unknown as WaterRecordInfo
+      
+      return <Water recordInfo={waterInfo} />
     }
     
     return (
