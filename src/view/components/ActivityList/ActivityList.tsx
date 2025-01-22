@@ -3,16 +3,25 @@
 import React from 'react'
 import { useGetActivityList } from '@/libs/hooks/activitys/use-get-activity-list'
 import { Sleep } from './ActivityComponents'
+import { ActivityRecord } from '@/types/ActivityRecord'
+import { SleepRecordInfo } from '@/types/RecordInfo'
 
 function ActivityList() {
   const { data: records, isLoading, error } = useGetActivityList()
 
-  const renderRecordInfo = (record: any) => {
+  const renderRecordInfo = (record: ActivityRecord) => {
     if (record.type === 'SLEEP') {
-      return <Sleep recordInfo={record.RecordInfo} />
+      const sleepInfo = record.RecordInfo as unknown as SleepRecordInfo
+      
+      return <Sleep recordInfo={sleepInfo} />
     }
     
-    return <p><strong>Informações:</strong> {JSON.stringify(record.RecordInfo)}</p>
+    return (
+      <>
+        <p><strong>Tipo:</strong> {record.type}</p>
+        <p><strong>Informações:</strong> {JSON.stringify(record.RecordInfo)}</p>
+      </>
+    )
   }
 
   return (
@@ -27,14 +36,15 @@ function ActivityList() {
           <span>{error.message}</span>
         </div>
       ) : (
-        <ul className="space-y-4">
+        <ul className="space-y-6">
           {Array.isArray(records) && records.length > 0 ? (
-            records.map((record, index) => (
-              <li key={index} className="p-4 border rounded-lg">
-                <p><strong>Tipo:</strong> {record.type}</p>
+            records.map((record) => (
+              <li key={record.createdAt} className="p-6 border rounded-lg shadow-sm hover:shadow-md transition-shadow">
                 {renderRecordInfo(record)}
                 {record.createdAt && (
-                  <p><strong>Data:</strong> {new Date(record.createdAt).toLocaleString()}</p>
+                  <p className="text-sm opacity-75 mt-3">
+                    Registrado em {new Date(record.createdAt).toLocaleString()}
+                  </p>
                 )}
               </li>
             ))

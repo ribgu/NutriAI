@@ -1,7 +1,7 @@
-import { SleepRecordInfo } from '@/types/RecordInfo'
+import { SleepRecord } from '@/types/RecordType'
 
 interface SleepProps {
-  recordInfo: SleepRecordInfo
+  recordInfo: SleepRecord
 }
 
 export function Sleep({ recordInfo }: SleepProps) {
@@ -34,22 +34,22 @@ export function Sleep({ recordInfo }: SleepProps) {
   const quality = getSleepQuality(hours)
 
   return (
-    <div className="space-y-2">
-      <h3 className="text-lg font-semibold">
+    <div className="space-y-4">
+      <h3 className="text-xl font-semibold text-primary">
         Noite de sono de {formatDate(sleepStart)}
       </h3>
-      <div className="grid gap-2">
-        <div className="flex items-center gap-2">
-          <span className="text-sm opacity-75">Horário:</span>
+      <div className="grid gap-3 pl-2">
+        <div className="flex items-center gap-3">
+          <span className="text-sm font-medium">Horário:</span>
           <span>{formatTime(sleepStart)} às {formatTime(sleepEnd)}</span>
         </div>
-        <div className="flex items-center gap-2">
-          <span className="text-sm opacity-75">Duração:</span>
+        <div className="flex items-center gap-3">
+          <span className="text-sm font-medium">Duração:</span>
           <span>{hours.toFixed(1)} horas</span>
         </div>
-        <div className="flex items-center gap-2">
-          <span className="text-sm opacity-75">Qualidade:</span>
-          <span className={quality.color}>{quality.text}</span>
+        <div className="flex items-center gap-3">
+          <span className="text-sm font-medium">Qualidade:</span>
+          <span className={`${quality.color} font-medium`}>{quality.text}</span>
         </div>
       </div>
     </div>
