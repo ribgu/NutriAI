@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { LayoutDashboard, UserCog, Settings, LogOut } from 'lucide-react'
+import { BedDouble, GlassWater, LayoutDashboard, LogOut, Utensils } from 'lucide-react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
@@ -30,17 +30,24 @@ export const AppLayout = ({ children }: AppLayoutProps) => {
       ),
     },
     {
-      label: 'Profile',
-      href: '#',
+      label: 'Refeições',
+      href: '/meals',
       icon: (
-        <UserCog className="text-neutral-700 dark:text-neutral-200 h-7 w-7 flex-shrink-0" />
+        <Utensils className="text-neutral-700 dark:text-neutral-200 h-7 w-7 flex-shrink-0" />
       ),
     },
     {
-      label: 'Settings',
-      href: '#',
+      label: 'Água',
+      href: '/water',
       icon: (
-        <Settings className="text-neutral-700 dark:text-neutral-200 h-7 w-7 flex-shrink-0" />
+        <GlassWater className="text-neutral-700 dark:text-neutral-200 h-7 w-7 flex-shrink-0" />
+      ),
+    },
+    {
+      label: 'Sono',
+      href: '/sleep',
+      icon: (
+        <BedDouble className="text-neutral-700 dark:text-neutral-200 h-7 w-7 flex-shrink-0" />
       ),
     },
     {
