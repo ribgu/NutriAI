@@ -2,9 +2,45 @@
 
 import React from 'react'
 import { useGetActivityList } from '@/libs/hooks/activitys/use-get-activity-list'
+import { Sleep, Water, Meal, Exercise } from './ActivityComponents/index'
+import { ActivityRecord } from '@/types/ActivityRecord'
+import { SleepRecordInfo, WaterRecordInfo, MealRecordInfo, ExerciseRecordInfo } from '@/types/RecordInfo'
 
 function ActivityList() {
   const { data: records, isLoading, error } = useGetActivityList()
+
+  const renderRecordInfo = (record: ActivityRecord) => {
+    if (record.type === 'SLEEP') {
+      const sleepInfo = record.RecordInfo as unknown as SleepRecordInfo
+
+      return <Sleep recordInfo={sleepInfo} />
+    }
+    
+    if (record.type === 'WATER') {
+      const waterInfo = record.RecordInfo as unknown as WaterRecordInfo
+      
+      return <Water recordInfo={waterInfo} />
+    }
+
+    if (record.type === 'MEAL') {
+      const mealInfo = record.RecordInfo as unknown as MealRecordInfo
+      
+      return <Meal recordInfo={mealInfo} />
+    }
+
+    if (record.type === 'EXERCISE') {
+      const exerciseInfo = record.RecordInfo as unknown as ExerciseRecordInfo
+      
+      return <Exercise recordInfo={exerciseInfo} />
+    }
+    
+    return (
+      <>
+        <p><strong>Tipo:</strong> {record.type}</p>
+        <p><strong>Informações:</strong> {JSON.stringify(record.RecordInfo)}</p>
+      </>
+    )
+  }
 
   return (
     <div>
@@ -18,14 +54,15 @@ function ActivityList() {
           <span>{error.message}</span>
         </div>
       ) : (
-        <ul className="space-y-4">
+        <ul className="space-y-6">
           {Array.isArray(records) && records.length > 0 ? (
-            records.map((record, index) => (
-              <li key={index} className="p-4 border rounded-lg">
-                <p><strong>Tipo:</strong> {record.type}</p>
-                <p><strong>Informações:</strong> {JSON.stringify(record.RecordInfo)}</p>
+            records.map((record) => (
+              <li key={record.createdAt} className="p-6 border rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                {renderRecordInfo(record)}
                 {record.createdAt && (
-                  <p><strong>Data:</strong> {new Date(record.createdAt).toLocaleString()}</p>
+                  <p className="text-sm opacity-75 mt-3">
+                    Registrado em {new Date(record.createdAt).toLocaleString()}
+                  </p>
                 )}
               </li>
             ))
