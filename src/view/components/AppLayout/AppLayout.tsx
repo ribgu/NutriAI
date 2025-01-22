@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { LayoutDashboard, UserCog, Settings, LogOut } from 'lucide-react'
+import { BedDouble, GlassWater, LayoutDashboard, LogOut, Utensils } from 'lucide-react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
@@ -12,46 +12,58 @@ interface AppLayoutProps {
   children: React.ReactNode
 }
 
-const links = [
-  {
-    label: 'Dashboard',
-    href: '#',
-    icon: (
-      <LayoutDashboard className="text-neutral-700 dark:text-neutral-200 h-7 w-7 flex-shrink-0" />
-    ),
-  },
-  {
-    label: 'Profile',
-    href: '#',
-    icon: (
-      <UserCog className="text-neutral-700 dark:text-neutral-200 h-7 w-7 flex-shrink-0" />
-    ),
-  },
-  {
-    label: 'Settings',
-    href: '#',
-    icon: (
-      <Settings className="text-neutral-700 dark:text-neutral-200 h-7 w-7 flex-shrink-0" />
-    ),
-  },
-  {
-    label: 'Logout',
-    href: '#',
-    icon: (
-      <LogOut className="text-neutral-700 dark:text-neutral-200 h-7 w-7 flex-shrink-0" />
-    ),
-  },
-]
-
 export const AppLayout = ({ children }: AppLayoutProps) => {
   const [open, setOpen] = useState(false)
-  const { user, isLoading } = useAuth()
+  const { user, isLoading, signOut } = useAuth()
+
+  const handleLogout = (e: React.MouseEvent) => {
+    e.preventDefault()
+    signOut()
+  }
+
+  const links = [
+    {
+      label: 'Dashboard',
+      href: '#',
+      icon: (
+        <LayoutDashboard className="text-neutral-700 dark:text-neutral-200 h-7 w-7 flex-shrink-0" />
+      ),
+    },
+    {
+      label: 'Refeições',
+      href: '/meals',
+      icon: (
+        <Utensils className="text-neutral-700 dark:text-neutral-200 h-7 w-7 flex-shrink-0" />
+      ),
+    },
+    {
+      label: 'Água',
+      href: '/water',
+      icon: (
+        <GlassWater className="text-neutral-700 dark:text-neutral-200 h-7 w-7 flex-shrink-0" />
+      ),
+    },
+    {
+      label: 'Sono',
+      href: '/sleep',
+      icon: (
+        <BedDouble className="text-neutral-700 dark:text-neutral-200 h-7 w-7 flex-shrink-0" />
+      ),
+    },
+    {
+      label: 'Logout',
+      href: '/login',
+      icon: (
+        <LogOut className="text-neutral-700 dark:text-neutral-200 h-7 w-7 flex-shrink-0" />
+      ),
+      onClick: handleLogout
+    },
+  ]
 
   const userName = user?.name ?? 'Carregando...'
 
   return (
     <div className="flex h-screen">
-      {/* Sidebar */}
       <Sidebar open={open} setOpen={setOpen}>
         <SidebarBody className="justify-between gap-10">
           <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
