@@ -8,6 +8,7 @@ export type MealRecordInfo = {
 
 export type ExerciseRecordInfo = {
   trainingDescription: string
+  type?: string
 }
 
 export type SleepRecordInfo = {

@@ -6,7 +6,7 @@ interface ExerciseProps {
 }
 
 export function Exercise({ recordInfo }: ExerciseProps) {
-  const { trainingDescription, duration, type } = recordInfo
+  const { trainingDescription, type } = recordInfo
 
   return (
     <div className="flex items-start gap-4">
@@ -18,11 +18,6 @@ export function Exercise({ recordInfo }: ExerciseProps) {
           {type || 'Exercício'}
         </h3>
         <p className="whitespace-pre-wrap">{trainingDescription}</p>
-        {duration && (
-          <p className="text-sm text-gray-600 mt-1">
-            Duração: {duration} minutos
-          </p>
-        )}
       </div>
     </div>
   )
