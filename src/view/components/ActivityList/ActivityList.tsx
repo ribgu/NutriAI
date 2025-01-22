@@ -2,9 +2,18 @@
 
 import React from 'react'
 import { useGetActivityList } from '@/libs/hooks/activitys/use-get-activity-list'
+import { Sleep } from './ActivityComponents'
 
 function ActivityList() {
   const { data: records, isLoading, error } = useGetActivityList()
+
+  const renderRecordInfo = (record: any) => {
+    if (record.type === 'SLEEP') {
+      return <Sleep recordInfo={record.RecordInfo} />
+    }
+    
+    return <p><strong>Informações:</strong> {JSON.stringify(record.RecordInfo)}</p>
+  }
 
   return (
     <div>
@@ -23,7 +32,7 @@ function ActivityList() {
             records.map((record, index) => (
               <li key={index} className="p-4 border rounded-lg">
                 <p><strong>Tipo:</strong> {record.type}</p>
-                <p><strong>Informações:</strong> {JSON.stringify(record.RecordInfo)}</p>
+                {renderRecordInfo(record)}
                 {record.createdAt && (
                   <p><strong>Data:</strong> {new Date(record.createdAt).toLocaleString()}</p>
                 )}
