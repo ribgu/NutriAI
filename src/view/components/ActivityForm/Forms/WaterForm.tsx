@@ -3,15 +3,16 @@ import { SetStateAction } from 'react'
 import { Slider } from '@/view/components/FormUtils'
 
 type WaterFormProps = {
-  waterAmount: string
-  setWaterAmount: React.Dispatch<SetStateAction<string>>
+  waterAmount: number
+  setWaterAmount: React.Dispatch<SetStateAction<number>>
+  waterDateHour: Date
 }
 
 export function WaterForm(props: WaterFormProps) {
   const { waterAmount, setWaterAmount } = props
 
   const handleSliderChange = (value: number[]) => {
-    setWaterAmount(value[0].toString())
+    setWaterAmount(value[0])
   }
 
   const PREDEFINED_AMOUNTS = [
@@ -28,7 +29,7 @@ export function WaterForm(props: WaterFormProps) {
         <div className="flex items-center gap-1">
           <input
             type="number"
-            value={waterAmount || '0'}
+            value={waterAmount || 0}
             onChange={(e) => setWaterAmount(e.target.value)}
             className="input input-bordered input-sm w-20 text-right"
             min="0"

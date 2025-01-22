@@ -16,7 +16,8 @@ type ActivityFormProps = {
 
 function ActivityForm({ activityType }: ActivityFormProps) {
   const [type, setType] = useState<RecordType>(activityType || 'WATER')
-  const [waterAmount, setWaterAmount] = useState('')
+  const [waterAmount, setWaterAmount] = useState(0)
+  const [waterDateHour, setWaterDateHour] = useState('')
   const [foodDescription, setFoodDescription] = useState('')
   const [trainingDescription, setTrainingDescription] = useState('')
   const [sleepStart, setSleepStart] = useState('')
