@@ -30,7 +30,7 @@ export function WaterForm(props: WaterFormProps) {
           <input
             type="number"
             value={waterAmount || 0}
-            onChange={(e) => setWaterAmount(e.target.value)}
+            onChange={(e) => setWaterAmount(Number(e.target.value))}
             className="input input-bordered input-sm w-20 text-right"
             min="0"
             max="10000"
@@ -56,7 +56,7 @@ export function WaterForm(props: WaterFormProps) {
           <button
             key={amount.value}
             type="button"
-            onClick={() => setWaterAmount(amount.value)}
+            onClick={() => setWaterAmount(Number(amount.value))}
             className="btn btn-outline flex-1 px-1 py-2"
           >
             {amount.icon}
