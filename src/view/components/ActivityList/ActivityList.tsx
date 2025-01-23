@@ -5,9 +5,14 @@ import { useGetActivityList } from '@/libs/hooks/activitys/use-get-activity-list
 import { Sleep, Water, Meal, Exercise } from './ActivityComponents/index'
 import { ActivityRecord } from '@/types/ActivityRecord'
 import { SleepRecordInfo, WaterRecordInfo, MealRecordInfo, ExerciseRecordInfo } from '@/types/RecordInfo'
+import { ActivityType } from '@/types/ActivityType'
 
-function ActivityList() {
-  const { data: records, isLoading, error } = useGetActivityList()
+type ActivityListProps = {
+  activityType?: ActivityType
+}
+
+function ActivityList({ activityType }: ActivityListProps) {
+  const { data: records, isLoading, error } = useGetActivityList(activityType)
 
   const renderRecordInfo = (record: ActivityRecord) => {
     if (record.type === 'SLEEP') {

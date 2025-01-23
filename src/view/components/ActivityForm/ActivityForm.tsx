@@ -10,9 +10,14 @@ import { SleepForm } from './Forms/SleepForm'
 import { useRouter } from 'next/navigation'
 import { useSaveActivity } from '@/libs/hooks/activitys/use-save-activity'
 
-function ActivityForm() {
-  const [type, setType] = useState<RecordType>('WATER')
-  const [waterAmount, setWaterAmount] = useState('')
+type ActivityFormProps = {
+  activityType?: RecordType
+}
+
+function ActivityForm({ activityType }: ActivityFormProps) {
+  const [type, setType] = useState<RecordType>(activityType || 'WATER')
+  const [waterAmount, setWaterAmount] = useState(0)
+  const [waterDateHour, setWaterDateHour] = useState<Date>(new Date())
   const [foodDescription, setFoodDescription] = useState('')
   const [trainingDescription, setTrainingDescription] = useState('')
   const [sleepStart, setSleepStart] = useState('')
@@ -30,7 +35,7 @@ function ActivityForm() {
   }
 
   const resetForm = () => {
-    setWaterAmount('')
+    setWaterAmount(0)
     setFoodDescription('')
     setTrainingDescription('')
     setSleepStart('')
@@ -68,26 +73,30 @@ function ActivityForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="form-control">
-        <label className="label" htmlFor="type">
-          <span className="label-text">Tipo de Atividade</span>
-        </label>
-        <select
-          id="type"
-          name="type"
-          required
-          value={type}
-          onChange={(e) => setType(e.target.value as RecordType)}
-          className="select select-bordered w-full"
-        >
-          <option value="WATER">Água</option>
-          <option value="MEAL">Refeição</option>
-          <option value="EXERCISE">Exercício</option>
-          <option value="SLEEP">Sono</option>
-        </select>
-      </div>
+      {!activityType && (
+        <div className="form-control">
+          <label className="label" htmlFor="type">
+            <span className="label-text">Tipo de Atividade</span>
+          </label>
+          <select
+            id="type"
+            name="type"
+            required
+            value={type}
+            onChange={(e) => setType(e.target.value as RecordType)}
+            className="select select-bordered w-full"
+          >
+            <option value="WATER">Água</option>
+            <option value="MEAL">Refeição</option>
+            <option value="EXERCISE">Exercício</option>
+            <option value="SLEEP">Sono</option>
+          </select>
+        </div>
+      )}
       {type === 'WATER' && (
         <WaterForm
+          waterDateHour={waterDateHour}
+          setWaterDateHour={setWaterDateHour}
           waterAmount={waterAmount}
           setWaterAmount={setWaterAmount}
         />
