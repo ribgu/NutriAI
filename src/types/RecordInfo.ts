@@ -1,5 +1,6 @@
 export type WaterRecordInfo = {
   waterAmount: number
+  waterDateHour?: Date | string
 }
 
 export type MealRecordInfo = {
