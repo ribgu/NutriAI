@@ -6,10 +6,11 @@ type WaterFormProps = {
   waterAmount: number
   setWaterAmount: React.Dispatch<SetStateAction<number>>
   waterDateHour: Date
+  setWaterDateHour: React.Dispatch<SetStateAction<Date>>
 }
 
 export function WaterForm(props: WaterFormProps) {
-  const { waterAmount, setWaterAmount } = props
+  const { waterAmount, setWaterAmount, waterDateHour, setWaterDateHour } = props
 
   const handleSliderChange = (value: number[]) => {
     setWaterAmount(value[0])
@@ -24,6 +25,16 @@ export function WaterForm(props: WaterFormProps) {
 
   return (
     <div className="form-control">
+      <label className="label" htmlFor="waterDateTime">
+        <span className="label-text">Quando você bebeu?</span>
+        <input
+          type="datetime-local"
+          id="waterDateTime"
+          value={waterDateHour?.toISOString().slice(0, 16)}
+          onChange={(e) => setWaterDateHour(new Date(e.target.value))}
+          className="input input-bordered input-sm"
+        />
+      </label>
       <label className="label" htmlFor="waterAmount">
         <span className="label-text">Quantidade de Água</span>
         <div className="flex items-center gap-1">

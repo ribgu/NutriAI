@@ -17,7 +17,7 @@ type ActivityFormProps = {
 function ActivityForm({ activityType }: ActivityFormProps) {
   const [type, setType] = useState<RecordType>(activityType || 'WATER')
   const [waterAmount, setWaterAmount] = useState(0)
-  const [waterDateHour, setWaterDateHour] = useState('')
+  const [waterDateHour, setWaterDateHour] = useState<Date>(new Date())
   const [foodDescription, setFoodDescription] = useState('')
   const [trainingDescription, setTrainingDescription] = useState('')
   const [sleepStart, setSleepStart] = useState('')
@@ -35,7 +35,7 @@ function ActivityForm({ activityType }: ActivityFormProps) {
   }
 
   const resetForm = () => {
-    setWaterAmount('')
+    setWaterAmount(0)
     setFoodDescription('')
     setTrainingDescription('')
     setSleepStart('')
@@ -95,6 +95,8 @@ function ActivityForm({ activityType }: ActivityFormProps) {
       )}
       {type === 'WATER' && (
         <WaterForm
+          waterDateHour={waterDateHour}
+          setWaterDateHour={setWaterDateHour}
           waterAmount={waterAmount}
           setWaterAmount={setWaterAmount}
         />
