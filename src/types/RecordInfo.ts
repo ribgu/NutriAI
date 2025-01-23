@@ -4,7 +4,16 @@ export type WaterRecordInfo = {
 }
 
 export type MealRecordInfo = {
+  mealType: string
+  mealTime: string
   foodDescription: string
+  hasBeverage: boolean
+  beverageDescription: string
+  beverageAmount: string
+  location: string
+  hungerLevel: string
+  moodAfterEating: string
+  estimatedCalories: string
 }
 
 export type ExerciseRecordInfo = {
