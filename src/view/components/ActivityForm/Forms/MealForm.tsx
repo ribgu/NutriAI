@@ -11,7 +11,6 @@ type MealInfo = {
   hungerLevel: string
   moodAfterEating: string
   estimatedCalories: string
-  postMealSatisfaction: string
 }
 
 type MealFormProps = {
@@ -136,22 +135,6 @@ export function MealForm({ mealInfo, onMealInfoChange }: MealFormProps) {
             </div>
           </>
         )}
-        <div className="form-control">
-          <label className="label" htmlFor="postMealSatisfaction">
-            <span className="label-text">Nível de satisfação após a refeição</span>
-          </label>
-          <select
-            id="postMealSatisfaction"
-            value={mealInfo.postMealSatisfaction}
-            onChange={(e) => onMealInfoChange('postMealSatisfaction', e.target.value)}
-            className="select select-bordered w-full"
-          >
-            <option value="">Selecione</option>
-            <option value="low">Baixo</option>
-            <option value="medium">Médio</option>
-            <option value="high">Alto</option>
-          </select>
-        </div>
       </div>
       <div className="space-y-4">
         <div className="form-control">
