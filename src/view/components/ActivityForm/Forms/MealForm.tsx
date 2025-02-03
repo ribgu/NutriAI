@@ -11,6 +11,9 @@ type MealInfo = {
   hungerLevel: string
   moodAfterEating: string
   estimatedCalories: string
+  // novos campos:
+  additionalNotes: string
+  postMealSatisfaction: string
 }
 
 type MealFormProps = {
@@ -136,9 +139,23 @@ export function MealForm({ mealInfo, onMealInfoChange }: MealFormProps) {
             </div>
           </>
         )}
+        <div className="form-control">
+          <label className="label" htmlFor="postMealSatisfaction">
+            <span className="label-text">Nível de satisfação após a refeição</span>
+          </label>
+          <select
+            id="postMealSatisfaction"
+            value={mealInfo.postMealSatisfaction}
+            onChange={(e) => onMealInfoChange('postMealSatisfaction', e.target.value)}
+            className="select select-bordered w-full"
+          >
+            <option value="">Selecione</option>
+            <option value="low">Baixo</option>
+            <option value="medium">Médio</option>
+            <option value="high">Alto</option>
+          </select>
+        </div>
       </div>
-
-      {/* Coluna da Direita */}
       <div className="space-y-4">
         <div className="form-control">
           <label className="label" htmlFor="mealTime">
@@ -153,7 +170,6 @@ export function MealForm({ mealInfo, onMealInfoChange }: MealFormProps) {
             required
           />
         </div>
-
         <div className="form-control">
           <label className="label" htmlFor="foodDescription">
             <span className="label-text">Descrição detalhada dos alimentos</span>
@@ -165,7 +181,7 @@ export function MealForm({ mealInfo, onMealInfoChange }: MealFormProps) {
             className="textarea textarea-bordered"
             placeholder="Liste os alimentos e quantidades aproximadas"
             required
-            rows={4}
+            rows={3}
           />
         </div>
 
