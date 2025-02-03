@@ -11,8 +11,6 @@ type MealInfo = {
   hungerLevel: string
   moodAfterEating: string
   estimatedCalories: string
-  // novos campos:
-  additionalNotes: string
   postMealSatisfaction: string
 }
 
@@ -40,7 +38,6 @@ const locations = [
 export function MealForm({ mealInfo, onMealInfoChange }: MealFormProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {/* Coluna da Esquerda */}
       <div className="space-y-4">
         <div className="form-control">
           <label className="label" htmlFor="mealType">
