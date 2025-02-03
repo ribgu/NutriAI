@@ -9,6 +9,7 @@ import { ExerciseForm } from './Forms/ExerciseForm'
 import { SleepForm } from './Forms/SleepForm'
 import { useRouter } from 'next/navigation'
 import { useSaveActivity } from '@/libs/hooks/activitys/use-save-activity'
+import { MealRecordInfo } from '@/types/RecordInfo'
 
 type ActivityFormProps = {
   activityType?: RecordType
@@ -18,10 +19,21 @@ function ActivityForm({ activityType }: ActivityFormProps) {
   const [type, setType] = useState<RecordType>(activityType || 'WATER')
   const [waterAmount, setWaterAmount] = useState(0)
   const [waterDateHour, setWaterDateHour] = useState<Date>(new Date())
-  const [foodDescription, setFoodDescription] = useState('')
   const [trainingDescription, setTrainingDescription] = useState('')
   const [sleepStart, setSleepStart] = useState('')
   const [sleepEnd, setSleepEnd] = useState('')
+  const [mealInfo, setMealInfo] = useState<MealRecordInfo>({
+    mealType: '',
+    mealTime: '',
+    foodDescription: '',
+    hasBeverage: false,
+    beverageDescription: '',
+    beverageAmount: '',
+    location: 'Casa',
+    hungerLevel: '3',
+    moodAfterEating: 'satisfied',
+    estimatedCalories: ''
+  })
   const router = useRouter()
   const { user } = useAuth()
   const mutation = useSaveActivity()
@@ -36,10 +48,16 @@ function ActivityForm({ activityType }: ActivityFormProps) {
 
   const resetForm = () => {
     setWaterAmount(0)
-    setFoodDescription('')
     setTrainingDescription('')
     setSleepStart('')
     setSleepEnd('')
+  }
+
+  const handleMealInfoChange = (field: keyof MealRecordInfo, value: string | boolean) => {
+    setMealInfo(prev => ({
+      ...prev,
+      [field]: value
+    }))
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -52,7 +70,7 @@ function ActivityForm({ activityType }: ActivityFormProps) {
     if (type === 'WATER') {
       recordInfo = { waterAmount }
     } else if (type === 'MEAL') {
-      recordInfo = { foodDescription }
+      recordInfo = mealInfo
     } else if (type === 'EXERCISE') {
       recordInfo = { trainingDescription }
     } else if (type === 'SLEEP') {
@@ -103,8 +121,8 @@ function ActivityForm({ activityType }: ActivityFormProps) {
       )}
       {type === 'MEAL' && (
         <MealForm
-          foodDescription={foodDescription}
-          setFoodDescription={setFoodDescription}
+          mealInfo={mealInfo}
+          onMealInfoChange={handleMealInfoChange}
         />
       )}
       {type === 'EXERCISE' && (
